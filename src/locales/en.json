@@ -1,0 +1,12 @@
+{
+  "common": {
+    "appName": "NovaFlow: Kroky",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Try again",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "continue": "Continue"
+  }
+}

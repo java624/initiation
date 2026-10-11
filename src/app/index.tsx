@@ -1,98 +1,134 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { makeStyles, useThemeController } from '@/theme';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
-
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
+const useStyles = makeStyles(({ colors, spacing, radius, typography, shadows }) => ({
   safeArea: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+    backgroundColor: colors.background,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
+  container: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+    paddingHorizontal: spacing.xl,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  card: {
+    width: '100%',
+    maxWidth: 420,
+    backgroundColor: colors.surface,
+    borderRadius: radius.lg,
+    padding: spacing.xl,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignItems: 'center',
+    ...shadows.md,
+  },
+  badge: {
+    backgroundColor: colors.accentSubtle,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    borderRadius: radius.full,
+    marginBottom: spacing.lg,
+  },
+  badgeText: {
+    ...typography.small,
+    color: colors.accent,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   title: {
+    ...typography.h1,
+    color: colors.textPrimary,
     textAlign: 'center',
+    marginBottom: spacing.sm,
   },
-  code: {
-    textTransform: 'uppercase',
+  subtitle: {
+    ...typography.body,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    marginBottom: spacing.xxl,
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  statusGrid: {
+    width: '100%',
+    flexDirection: 'row',
+    gap: spacing.md,
+    marginBottom: spacing.xl,
   },
-});
+  statusCard: {
+    flex: 1,
+    padding: spacing.md,
+    borderRadius: radius.md,
+    backgroundColor: colors.surfaceSecondary,
+    alignItems: 'center',
+  },
+  statusLabel: {
+    ...typography.caption,
+    color: colors.textSecondary,
+    marginBottom: spacing.xxs,
+  },
+  statusValue: {
+    ...typography.h3,
+    color: colors.textPrimary,
+  },
+  themeButton: {
+    backgroundColor: colors.accent,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.xl,
+    borderRadius: radius.md,
+    alignItems: 'center',
+    width: '100%',
+  },
+  themeButtonText: {
+    ...typography.bodyMedium,
+    color: colors.textInverse,
+  },
+}));
+
+export default function HomeScreen() {
+  const styles = useStyles();
+  const { mode, setMode, isDark } = useThemeController();
+
+  const handleToggleTheme = () => {
+    if (mode === 'system') {
+      setMode(isDark ? 'light' : 'dark');
+    } else if (mode === 'light') {
+      setMode('dark');
+    } else {
+      setMode('system');
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <View style={styles.card}>
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>NovaFlow Foundation</Text>
+          </View>
+
+          <Text style={styles.title}>«Кроки»</Text>
+          <Text style={styles.subtitle}>
+            Платформа інтервального повторення та фокусованого навчання
+          </Text>
+
+          <View style={styles.statusGrid}>
+            <View style={styles.statusCard}>
+              <Text style={styles.statusLabel}>Режим теми</Text>
+              <Text style={styles.statusValue}>{mode.toUpperCase()}</Text>
+            </View>
+            <View style={styles.statusCard}>
+              <Text style={styles.statusLabel}>Вигляд</Text>
+              <Text style={styles.statusValue}>{isDark ? 'Dark' : 'Light'}</Text>
+            </View>
+          </View>
+
+          <Pressable style={styles.themeButton} onPress={handleToggleTheme}>
+            <Text style={styles.themeButtonText}>Перемкнути тему</Text>
+          </Pressable>
+        </View>
+      </View>
+    </SafeAreaView>
+  );
+}

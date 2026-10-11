@@ -1,4 +1,5 @@
 # 🚀 Технічний план розробки застосунку «NovaFlow: Кроки» (React Native / Expo)
+
 > **Фінальний командний проєкт на 4 тижні (100 балів + 15 бонусів)**  
 > **Стек:** React Native (Expo SDK 57), Expo Router, TypeScript (strict), Zustand, TanStack Query, Supabase, FlashList, Reanimated, react-hook-form + zod, i18next, pnpm.
 
@@ -12,29 +13,30 @@
 Команда працює за принципом **Feature-Based Architecture**: кожен розробляє власні ізольовані модулі в окремих папках та окремих гілках Git, що зводить ризик конфліктів (merge conflicts) майже до нуля.
 
 ### 👥 Склад команди та зони відповідальності:
+
 1. **Павло (Core & Fullstack):**
-   * Архітектура проєкту, конфігурація `pnpm`, `tsconfig`, ESLint/Prettier/Husky.
-   * Дизайн-токени бренду NovaFlow (`src/theme/`), `makeStyles.ts`, `ThemeProvider`.
-   * Бекенд Supabase (міграції, RLS-політики, клієнт `supabase.ts` з `expo-secure-store`).
-   * Ядро інтервального повторення: чистий алгоритм `sm2.ts`, Unit-тести на Jest, 3D-анімація перевороту картки, сесія `StudySession`.
-   * Офлайн-кешування (TanStack Query + MMKV/AsyncStorage).
-   * Налаштування CI (GitHub Actions) та code review.
+   - Архітектура проєкту, конфігурація `pnpm`, `tsconfig`, ESLint/Prettier/Husky.
+   - Дизайн-токени бренду NovaFlow (`src/theme/`), `makeStyles.ts`, `ThemeProvider`.
+   - Бекенд Supabase (міграції, RLS-політики, клієнт `supabase.ts` з `expo-secure-store`).
+   - Ядро інтервального повторення: чистий алгоритм `sm2.ts`, Unit-тести на Jest, 3D-анімація перевороту картки, сесія `StudySession`.
+   - Офлайн-кешування (TanStack Query + MMKV/AsyncStorage).
+   - Налаштування CI (GitHub Actions) та code review.
 
 2. **Олександр (Feature Developer 1 — Auth, Decks & Cards):**
-   * Онбординг (`Onboarding` на 3 слайди зі свайпом).
-   * Авторизація (`SignIn`, `SignUp`, `ForgotPassword`) з валідацією `react-hook-form` + `zod`.
-   * Модуль колод: `DecksList` (список на `FlashList` зі свайпом видалення через `react-native-gesture-handler`), `DeckDetails`, `DeckForm`.
-   * Модуль карток: `CardsList`, `CardForm` (CRUD карток: слово, переклад, приклад).
-   * **Бонус:** Імпорт карток із тексту / CSV файлу.
+   - Онбординг (`Onboarding` на 3 слайди зі свайпом).
+   - Авторизація (`SignIn`, `SignUp`, `ForgotPassword`) з валідацією `react-hook-form` + `zod`.
+   - Модуль колод: `DecksList` (список на `FlashList` зі свайпом видалення через `react-native-gesture-handler`), `DeckDetails`, `DeckForm`.
+   - Модуль карток: `CardsList`, `CardForm` (CRUD карток: слово, переклад, приклад).
+   - **Бонус:** Імпорт карток із тексту / CSV файлу.
 
 3. **Іван (Feature Developer 2 — UI-Kit, Timer, Stats, Settings & Dictionary):**
-   * Базовий UI-кіт на токенах теми (`shared/ui/`): `Button`, `Text`, `Input`, `Card`, `Screen`, `EmptyState`, `Skeleton`.
-   * Локалізація (`i18next` + словники `uk.json`, `en.json`).
-   * Фокус-таймер Pomodoro (`features/focus/`): Zustand-стор `useTimerStore`, фоновий розрахунок часу, локальні сповіщення `expo-notifications`.
-   * Профіль та налаштування (`Profile`, `Settings`): перемикання теми (світла/темна), мови, денна ціль.
-   * Головний екран (`Home`): прогрес дня, серія днів (streak), швидкий запуск.
-   * **Бонус 1:** Словник `WordLookup` через публічний Free Dictionary API.
-   * **Бонус 2:** Екран `Stats` з графіками повторень за 7/30 днів (`react-native-gifted-charts`).
+   - Базовий UI-кіт на токенах теми (`shared/ui/`): `Button`, `Text`, `Input`, `Card`, `Screen`, `EmptyState`, `Skeleton`.
+   - Локалізація (`i18next` + словники `uk.json`, `en.json`).
+   - Фокус-таймер Pomodoro (`features/focus/`): Zustand-стор `useTimerStore`, фоновий розрахунок часу, локальні сповіщення `expo-notifications`.
+   - Профіль та налаштування (`Profile`, `Settings`): перемикання теми (світла/темна), мови, денна ціль.
+   - Головний екран (`Home`): прогрес дня, серія днів (streak), швидкий запуск.
+   - **Бонус 1:** Словник `WordLookup` через публічний Free Dictionary API.
+   - **Бонус 2:** Екран `Stats` з графіками повторень за 7/30 днів (`react-native-gifted-charts`).
 
 ---
 
@@ -43,14 +45,16 @@
 ---
 
 ### 🟢 ТИЖДЕНЬ 1: Фундамент, UI-система та налаштування оточення
+
 > **Мета тижня:** Налаштувати чистий проєкт, дизайн-систему, базові UI-компоненти та локалізацію.
 
 #### 🛠 Павло:
-- [ ] Ініціалізувати чистий Expo SDK 57 проєкт з Expo Router через `pnpm`.
-- [ ] Налаштувати `tsconfig.json` з `"strict": true` та аліасами (`@/features`, `@/shared`, `@/theme`, `@/store`).
-- [ ] Налаштувати ESLint, Prettier, Husky pre-commit хук (перевірка `lint` та `typecheck`).
-- [ ] Створити структуру папок проєкту за правилами ТЗ (Розділ 4).
-- [ ] Створити дизайн-систему `src/theme/`:
+
+- [x] Ініціалізувати чистий Expo SDK 57 проєкт з Expo Router через `pnpm`.
+- [x] Налаштувати `tsconfig.json` з `"strict": true` та аліасами (`@/features`, `@/shared`, `@/theme`, `@/store`).
+- [x] Налаштувати ESLint, Prettier, Husky pre-commit хук (перевірка `lint` та `typecheck`).
+- [x] Створити структуру папок проєкту за правилами ТЗ (Розділ 4).
+- [x] Створити дизайн-систему `src/theme/`:
   - `tokens/palette.ts` (фірмова палітра NovaFlow: пурпурний, смарагдовий, бурштиновий, слейт).
   - `tokens/colors.ts` (семантичні кольори для light та dark тем).
   - `tokens/spacing.ts`, `radius.ts`, `typography.ts`, `shadows.ts`.
@@ -58,6 +62,7 @@
 - [ ] Створити GitHub репозиторій, налаштувати захист гілки `main`, надати доступ Олександру та Івану.
 
 #### 🛠 Олександр:
+
 - [ ] Встановити та протестувати запуск проєкту локально через `pnpm install` та `pnpm start`.
 - [ ] Створити окрему гілку `feature/auth-schemas`.
 - [ ] Описати Zod-схеми валідації в `src/features/auth/schemas/auth.schema.ts`:
@@ -67,6 +72,7 @@
 - [ ] Зробити Pull Request до гілки `main`.
 
 #### 🛠 Іван:
+
 - [ ] Встановити та протестувати запуск проєкту локально через `pnpm install` та `pnpm start`.
 - [ ] Створити окрему гілку `feature/ui-kit-and-i18n`.
 - [ ] Реалізувати компоненти у `src/shared/ui/` з використанням хелпера `makeStyles`:
@@ -82,9 +88,11 @@
 ---
 
 ### 🟡 ТИЖДЕНЬ 2: Авторизація, Моделі даних та CRUD Колод
+
 > **Мета тижня:** Робоча авторизація, навігація (Tabs + Stack), повноцінне створення і перегляд колод та карток.
 
 #### 🛠 Павло:
+
 - [ ] Створити SQL-міграцію в Supabase: таблиці `decks`, `cards`, `card_reviews`, `focus_sessions` з RLS.
 - [ ] Налаштувати `src/shared/lib/supabase.ts` з `expo-secure-store` для збереження сесії.
 - [ ] Налаштувати TanStack Query клієнт у `src/shared/lib/queryClient.ts`.
@@ -94,6 +102,7 @@
 - [ ] Налаштувати кореневу навігацію `src/app/_layout.tsx` (перевірка сесії: якщо не залогінений -> `(auth)`, якщо залогінений -> `(tabs)`).
 
 #### 🛠 Олександр:
+
 - [ ] Гілка `feature/auth-screens`:
   - Екран `Onboarding`: 3 слайди з ілюстраціями, описом можливостей та кнопкою «Почати».
   - Екрани `(auth)/sign-in.tsx` та `(auth)/sign-up.tsx`: форми на `react-hook-form` + `zod`, відображення помилок через UI-компоненти Івана.
@@ -105,6 +114,7 @@
   - Екрани `DeckForm` (створення/редагування) та `DeckDetails`.
 
 #### 🛠 Іван:
+
 - [ ] Гілка `feature/profile-and-settings`:
   - Створити Zustand-стор налаштувань `src/store/settingsStore.ts` (тема, мова, денна ціль карток).
   - Екран `(tabs)/profile.tsx`: інформація про користувача (аватар, email, ім'я, кнопка виходу).
@@ -117,9 +127,11 @@
 ---
 
 ### 🟠 ТИЖДЕНЬ 3: Серце застосунку — SM-2, Анімації та Pomodoro
+
 > **Мета тижня:** Інтервальне повторення SM-2 з 3D-анімацією, робочий фокус-таймер, головний екран.
 
 #### 🛠 Павло:
+
 - [ ] Створити чистий модуль алгоритму `src/features/study/lib/sm2.ts`:
   - Функція `calculateSM2({ rating, repetitionNumber, easinessFactor, intervalDays })`.
   - Покрити модуль Unit-тестами `sm2.test.ts` (всі 4 оцінки: again, hard, good, easy; перевірка граничного EF >= 1.3).
@@ -131,6 +143,7 @@
 - [ ] Налаштувати офлайн-роботу карток: кешування запитів TanStack Query через `AsyncStorage` / `MMKV`.
 
 #### 🛠 Олександр:
+
 - [ ] Гілка `feature/cards-crud`:
   - Описати схему `card.schema.ts` (слово/термін, переклад/визначення, контекст/приклад).
   - Сервіс `cards.api.ts` та хук `useCards.ts`.
@@ -139,6 +152,7 @@
   - Можливість вставити текст у форматі `слово;переклад;приклад` або завантажити CSV-файл і створити пачку карток в один тап.
 
 #### 🛠 Іван:
+
 - [ ] Гілка `feature/focus-timer`:
   - Створити Zustand-стор `useTimerStore.ts` (режими: Фокус 25 хв, Коротка перерва 5 хв, Довга перерва 15 хв; стани: idle, running, paused).
   - Реалізувати захист від згортання: фіксація `targetEndTimestamp`, щоб таймер не збивався у фоні.
@@ -155,9 +169,11 @@
 ---
 
 ### 🔴 ТИЖДЕНЬ 4: Бонуси (на 115 балів), Тести, Полірування та Здача
+
 > **Мета тижня:** Бонусні фічі, графіки, перевірка лінтерами, збірка EAS, підготовка виступу.
 
 #### 🛠 Павло:
+
 - [ ] Налаштувати GitHub Actions Workflow (`.github/workflows/ci.yml`):
   - Автоматичний запуск `pnpm lint`, `pnpm tsc --noEmit` та `pnpm test` на кожен Pull Request.
 - [ ] Провести повний аудит коду:
@@ -168,12 +184,14 @@
 - [ ] Оформити головний `README.md` (скриншоти, архітектура, стек, інструкція запуску, посилання на білд).
 
 #### 🛠 Олександр:
+
 - [ ] Перевірити роботу всіх форм на реальному Android / iOS (підйом клавіатури `KeyboardAvoidingView`, safe areas).
 - [ ] Написати компонентний тест для `DeckForm` на базі React Native Testing Library (RNTL).
 - [ ] Перевірити валідацію та обробку помилок бекенду (відображення тостів або `ErrorState` при відсутності зв'язку).
 - [ ] Підготувати свою частину розповіді на демо (авторизація, робота з колодами та картками, імпорт CSV).
 
 #### 🛠 Іван:
+
 - [ ] **Бонус 1 — Словник (`WordLookup`):**
   - Екран пошуку слова через відкритий API: `https://api.dictionaryapi.dev/api/v2/entries/en/{word}`.
   - Відображення транскрипції, аудіо вимови, визначень та прикладів.
@@ -190,33 +208,33 @@
 ## 📋 3. Суворі правила коду та Git (За чим стежить викладач)
 
 1. **Команди встановлення та запуску:**
-   * Усі бібліотеки додаємо виключно через `pnpm add <package>` або `npx expo install <package>` для нативних модулів.
-   * Жодного `npm` чи `yarn` у терміналі, щоб не поламати `pnpm-lock.yaml`.
+   - Усі бібліотеки додаємо виключно через `pnpm add <package>` або `npx expo install <package>` для нативних модулів.
+   - Жодного `npm` чи `yarn` у терміналі, щоб не поламати `pnpm-lock.yaml`.
 2. **Ніяких «сирих» стилів:**
-   * ❌ ЗАБОРОНЕНО: `<View style={{ padding: 16, backgroundColor: '#ffffff' }} />` (мінус 5 балів за кожен випадок!).
-   *  ПРАВИЛЬНО: через `makeStyles`:
-     ```typescript
-     export const useStyles = makeStyles(({ colors, spacing, radius }) => ({
-       container: {
-         padding: spacing.base,
-         backgroundColor: colors.surface,
-         borderRadius: radius.md,
-       },
-     }));
-     ```
+   - ❌ ЗАБОРОНЕНО: `<View style={{ padding: 16, backgroundColor: '#ffffff' }} />` (мінус 5 балів за кожен випадок!).
+   - ПРАВИЛЬНО: через `makeStyles`:
+   ```typescript
+   export const useStyles = makeStyles(({ colors, spacing, radius }) => ({
+     container: {
+       padding: spacing.base,
+       backgroundColor: colors.surface,
+       borderRadius: radius.md,
+     },
+   }));
+   ```
 3. **Ніякого захардкодscopeженого тексту:**
-   * ❌ ЗАБОРОНЕНО: `<Text>Увійти</Text>`
-   *  ПРАВИЛЬНО: `<Text>{t('auth.signIn')}</Text>`
+   - ❌ ЗАБОРОНЕНО: `<Text>Увійти</Text>`
+   - ПРАВИЛЬНО: `<Text>{t('auth.signIn')}</Text>`
 4. **Формат комітів (Conventional Commits):**
-   * `feat(auth): add sign in form with zod validation`
-   * `feat(timer): create pomodoro countdown store`
-   * `feat(decks): add swipe to delete gesture`
-   * `fix(ui): adjust button padding for small screens`
+   - `feat(auth): add sign in form with zod validation`
+   - `feat(timer): create pomodoro countdown store`
+   - `feat(decks): add swipe to delete gesture`
+   - `fix(ui): adjust button padding for small screens`
 5. **Робота з Git:**
-   * Ніхто не пушить напряму в `main`!
-   * Створюємо гілку: `git checkout -b feature/назва-фічі`.
-   * Робимо коміти, пушимо: `git push origin feature/назва-фічі`.
-   * Створюємо Pull Request на GitHub, інший напарник або тимлід тисне «Approve», після чого зливаємо в `main`.
+   - Ніхто не пушить напряму в `main`!
+   - Створюємо гілку: `git checkout -b feature/назва-фічі`.
+   - Робимо коміти, пушимо: `git push origin feature/назва-фічі`.
+   - Створюємо Pull Request на GitHub, інший напарник або тимлід тисне «Approve», після чого зливаємо в `main`.
 
 ---
 
