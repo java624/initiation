@@ -1,29 +1,42 @@
 import { TextStyle } from 'react-native';
 
 /**
- * Токени типографіки відповідно до Розділу 5 ТЗ.
+ * Типографіка NovaFlow на базі Manrope (підтримує кирилицю).
+ * Шрифти підвантажуються в src/app/index.tsx через useFonts.
+ * Кожна вага = окремий fontFamily, тому fontWeight у варіантах не задаємо.
  */
+
+export const fontFamilies = {
+  regular: 'Manrope_400Regular',
+  medium: 'Manrope_500Medium',
+  semibold: 'Manrope_600SemiBold',
+  bold: 'Manrope_700Bold',
+  extrabold: 'Manrope_800ExtraBold',
+} as const;
 
 export const fontSizes = {
   xs: 12,
-  sm: 14,
-  base: 16,
+  sm: 13,
+  base: 15,
+  md: 16,
   lg: 18,
-  xl: 20,
-  xxl: 24,
+  xl: 22,
+  xxl: 26,
   xxxl: 32,
 } as const;
 
 export const lineHeights = {
   xs: 16,
-  sm: 20,
-  base: 24,
-  lg: 26,
+  sm: 18,
+  base: 22,
+  md: 22,
+  lg: 24,
   xl: 28,
   xxl: 32,
-  xxxl: 40,
+  xxxl: 38,
 } as const;
 
+// Залишено для сумісності, якщо десь імпортується. У варіантах не використовується.
 export const fontWeights: Record<string, TextStyle['fontWeight']> = {
   regular: '400',
   medium: '500',
@@ -33,39 +46,46 @@ export const fontWeights: Record<string, TextStyle['fontWeight']> = {
 
 export const typography = {
   h1: {
-    fontSize: fontSizes.xxxl,
-    lineHeight: lineHeights.xxxl,
-    fontWeight: fontWeights.bold,
-  },
-  h2: {
+    fontFamily: fontFamilies.extrabold,
     fontSize: fontSizes.xxl,
     lineHeight: lineHeights.xxl,
-    fontWeight: fontWeights.bold,
+    letterSpacing: -0.4,
   },
-  h3: {
+  h2: {
+    fontFamily: fontFamilies.bold,
     fontSize: fontSizes.xl,
     lineHeight: lineHeights.xl,
-    fontWeight: fontWeights.semibold,
+    letterSpacing: -0.2,
+  },
+  h3: {
+    fontFamily: fontFamilies.semibold,
+    fontSize: fontSizes.lg,
+    lineHeight: lineHeights.lg,
+  },
+  subtitle: {
+    fontFamily: fontFamilies.regular,
+    fontSize: fontSizes.md,
+    lineHeight: lineHeights.md,
   },
   body: {
+    fontFamily: fontFamilies.regular,
     fontSize: fontSizes.base,
     lineHeight: lineHeights.base,
-    fontWeight: fontWeights.regular,
   },
   bodyMedium: {
+    fontFamily: fontFamilies.medium,
     fontSize: fontSizes.base,
     lineHeight: lineHeights.base,
-    fontWeight: fontWeights.medium,
   },
   caption: {
+    fontFamily: fontFamilies.regular,
     fontSize: fontSizes.sm,
     lineHeight: lineHeights.sm,
-    fontWeight: fontWeights.regular,
   },
   small: {
+    fontFamily: fontFamilies.medium,
     fontSize: fontSizes.xs,
     lineHeight: lineHeights.xs,
-    fontWeight: fontWeights.medium,
   },
 } as const satisfies Record<string, TextStyle>;
 

@@ -1,7 +1,7 @@
 import { ViewStyle } from 'react-native';
 
 /**
- * Токени тіней для iOS та Android (Розділ 5 ТЗ).
+ * М'які преміальні розсіяні тіні (Soft Shadows).
  */
 
 export const shadows = {
@@ -13,25 +13,25 @@ export const shadows = {
     elevation: 0,
   },
   sm: {
-    shadowColor: '#0F172A',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
+    shadowColor: '#2B1A35',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
     elevation: 2,
   },
   md: {
-    shadowColor: '#0F172A',
+    shadowColor: '#2B1A35',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
     elevation: 4,
   },
   lg: {
-    shadowColor: '#0F172A',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.12,
-    shadowRadius: 15,
-    elevation: 8,
+    shadowColor: '#2B1A35',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.08,
+    shadowRadius: 24,
+    elevation: 6,
   },
 } as const satisfies Record<string, ViewStyle>;
 

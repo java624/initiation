@@ -2,7 +2,7 @@ import { palette } from './palette';
 
 /**
  * Семантичні кольори теми (Light & Dark).
- * Компоненти використовують ЛИШЕ семантичні назви (напр. colors.surface, colors.textPrimary).
+ * NovaFlow brand: #5E077E, warm off-white #FAF8F5, graphite text #1F2024.
  */
 
 export interface SemanticColors {
@@ -18,12 +18,22 @@ export interface SemanticColors {
   textTertiary: string;
   textInverse: string;
 
-  // Брендовий акцент (Purple)
+  // Брендовий акцент (#5E077E)
   accent: string;
   accentHover: string;
   accentSubtle: string;
+  accentBorder: string;
+  accentGlow: string;
 
-  // Семантичні стани (Успіх, Увага, Помилка)
+  // Градієнт брендових кнопок
+  gradientStart: string;
+  gradientMid: string;
+  gradientEnd: string;
+
+  // Колір контенту поверх акценту/градієнта (білий в обох темах)
+  onAccent: string;
+
+  // Семантичні стани
   success: string;
   successSubtle: string;
   warning: string;
@@ -31,87 +41,101 @@ export interface SemanticColors {
   danger: string;
   dangerSubtle: string;
 
-  // Межі та розділювачі
+  // Межі
   border: string;
   borderStrong: string;
   borderFocus: string;
 
-  // Інше
+  // Допоміжні
   card: string;
   overlay: string;
   transparent: string;
 }
 
 export const lightColors: SemanticColors = {
-  // Фони та поверхні
-  background: palette.slate50,
-  surface: palette.white,
-  surfaceSecondary: palette.slate100,
-  surfaceElevated: palette.white,
+  // Теплий майже білий фон
+  background: palette.warmWhite,
+  surface: palette.warmSurface,
+  surfaceSecondary: palette.warmSurfaceSecondary,
+  surfaceElevated: palette.warmSurface,
 
-  // Текст
-  textPrimary: palette.slate900,
-  textSecondary: palette.slate600,
-  textTertiary: palette.slate400,
+  // Графітовий текст
+  textPrimary: palette.graphite900,
+  textSecondary: palette.graphite700,
+  textTertiary: palette.graphite500,
   textInverse: palette.white,
 
-  // Брендовий акцент (Purple)
-  accent: palette.purple600,
-  accentHover: palette.purple700,
-  accentSubtle: palette.purple50,
+  // Фірмовий фіолетовий #5E077E
+  accent: palette.brandPurple,
+  accentHover: palette.brandPurpleHover,
+  accentSubtle: palette.brandPurpleSubtle,
+  accentBorder: palette.brandPurpleBorder,
+  accentGlow: palette.brandPurpleGlow,
 
-  // Семантичні стани (Успіх, Увага, Помилка)
+  // Градієнт кнопок
+  gradientStart: palette.brandGradientStart,
+  gradientMid: palette.brandGradientMid,
+  gradientEnd: palette.brandPurple,
+  onAccent: palette.white,
+
+  // Стани
   success: palette.emerald600,
-  successSubtle: palette.emerald50,
+  successSubtle: palette.emeraldSubtle,
   warning: palette.amber500,
-  warningSubtle: palette.amber50,
+  warningSubtle: palette.amberSubtle,
   danger: palette.rose600,
-  dangerSubtle: palette.rose50,
+  dangerSubtle: palette.roseSubtle,
 
-  // Межі та розділювачі
-  border: palette.slate200,
-  borderStrong: palette.slate300,
-  borderFocus: palette.purple600,
+  // Межі
+  border: palette.warmBorder,
+  borderStrong: palette.warmBorderStrong,
+  borderFocus: palette.brandPurple,
 
-  // Інше
-  card: palette.white,
-  overlay: 'rgba(15, 23, 42, 0.5)',
+  card: palette.warmSurface,
+  overlay: 'rgba(31, 32, 36, 0.45)',
   transparent: palette.transparent,
 };
 
 export const darkColors: SemanticColors = {
-  // Фони та поверхні
-  background: palette.slate950,
-  surface: palette.slate900,
-  surfaceSecondary: palette.slate800,
-  surfaceElevated: palette.slate800,
+  // Темний фон - глибокий графіт
+  background: palette.darkBg,
+  surface: palette.darkSurface,
+  surfaceSecondary: palette.darkSurfaceSecondary,
+  surfaceElevated: palette.darkSurfaceSecondary,
 
   // Текст
-  textPrimary: palette.slate50,
-  textSecondary: palette.slate400,
-  textTertiary: palette.slate500,
-  textInverse: palette.slate950,
+  textPrimary: palette.darkTextPrimary,
+  textSecondary: palette.darkTextSecondary,
+  textTertiary: palette.darkTextTertiary,
+  textInverse: palette.darkBg,
 
-  // Брендовий акцент (Purple)
-  accent: palette.purple500,
-  accentHover: palette.purple400,
-  accentSubtle: palette.purple950,
+  // Брендовий акцент для темної теми
+  accent: palette.darkPurpleAccent,
+  accentHover: palette.brandPurpleLight,
+  accentSubtle: palette.darkPurpleSubtle,
+  accentBorder: palette.brandPurpleLight,
+  accentGlow: 'rgba(157, 59, 196, 0.2)',
 
-  // Семантичні стани
+  // Градієнт кнопок (однаковий в обох темах)
+  gradientStart: palette.brandGradientStart,
+  gradientMid: palette.brandGradientMid,
+  gradientEnd: palette.brandPurple,
+  onAccent: palette.white,
+
+  // Стани
   success: palette.emerald500,
-  successSubtle: palette.emerald950,
-  warning: palette.amber400,
-  warningSubtle: palette.amber950,
+  successSubtle: 'rgba(16, 185, 129, 0.15)',
+  warning: palette.amber500,
+  warningSubtle: 'rgba(245, 158, 11, 0.15)',
   danger: palette.rose500,
-  dangerSubtle: palette.rose950,
+  dangerSubtle: 'rgba(225, 29, 72, 0.15)',
 
-  // Межі та розділювачі
-  border: palette.slate800,
-  borderStrong: palette.slate700,
-  borderFocus: palette.purple400,
+  // Межі
+  border: palette.darkBorder,
+  borderStrong: palette.darkBorderStrong,
+  borderFocus: palette.darkPurpleAccent,
 
-  // Інше
-  card: palette.slate900,
-  overlay: 'rgba(2, 6, 23, 0.75)',
+  card: palette.darkSurface,
+  overlay: 'rgba(0, 0, 0, 0.7)',
   transparent: palette.transparent,
 };

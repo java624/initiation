@@ -1,74 +1,62 @@
 /**
  * NovaFlow Brand Palette
- * Фірмова палітра NovaFlow: пурпурний (акцент), смарагдовий (успіх/серія), бурштиновий (фокус/увага), слейт (нейтральний).
- * Hex-кольори дозволені ТІЛЬКИ в цьому файлі відповідно до ТЗ (Розділ 5).
+ * Фірмова палітра NovaFlow:
+ * - Фірмовий фіолетовий #5E077E як головний акцент
+ * - Теплий майже білий фон #FAF8F5
+ * - Графітовий текст #1F2024
  */
 
 export const palette = {
-  // Пурпурний (NovaFlow Purple - Primary Brand)
-  purple50: '#FAF5FF',
-  purple100: '#F3E8FF',
-  purple200: '#E9D5FF',
-  purple300: '#D8B4FE',
-  purple400: '#C084FC',
-  purple500: '#A855F7',
-  purple600: '#9333EA',
-  purple700: '#7E22CE',
-  purple800: '#6B21A8',
-  purple900: '#581C87',
-  purple950: '#3B0764',
+  // Фірмовий фіолетовий NovaFlow (#5E077E)
+  brandPurple: '#5E077E',
+  brandPurpleHover: '#4C0566',
+  brandPurpleActive: '#3C0352',
+  brandPurpleLight: '#7A15A3',
+  brandPurpleMuted: '#9634C2',
+  brandPurpleSubtle: '#F6ECFA',
+  brandPurpleBorder: '#E5C9F2',
+  brandPurpleGlow: 'rgba(94, 7, 126, 0.12)',
+  brandGradientStart: '#A31FCB',
+  brandGradientMid: '#7E15A3',
 
-  // Смарагдовий (Emerald - Success / Streak / Easy)
-  emerald50: '#ECFDF5',
-  emerald100: '#D1FAE5',
-  emerald200: '#A7F3D0',
-  emerald300: '#6EE7B7',
-  emerald400: '#34D399',
+  // Смарагдовий (Emerald - Успіх)
   emerald500: '#10B981',
   emerald600: '#059669',
-  emerald700: '#047857',
-  emerald800: '#065F46',
-  emerald900: '#064E3B',
-  emerald950: '#022C22',
+  emeraldSubtle: '#ECFDF5',
 
-  // Бурштиновий (Amber - Warning / Review / Hard)
-  amber50: '#FFFBEB',
-  amber100: '#FEF3C7',
-  amber200: '#FDE68A',
-  amber300: '#FCD34D',
-  amber400: '#FBBF24',
+  // Бурштиновий (Amber - Увага)
   amber500: '#F59E0B',
-  amber600: '#D97706',
-  amber700: '#B45309',
-  amber800: '#92400E',
-  amber900: '#78350F',
-  amber950: '#451A03',
+  amberSubtle: '#FFFBEB',
 
-  // Трояндовий / Червоний (Rose - Danger / Again / Reset)
-  rose50: '#FFF1F2',
-  rose100: '#FFE4E6',
-  rose200: '#FECDD3',
-  rose300: '#FDA4AF',
-  rose400: '#FB7185',
-  rose500: '#F43F5E',
-  rose600: '#E11D48',
-  rose700: '#BE123C',
-  rose800: '#9F1239',
-  rose900: '#881337',
-  rose950: '#4C0519',
+  // Червоний (Rose - Помилка)
+  rose500: '#E11D48',
+  rose600: '#BE123C',
+  roseSubtle: '#FFF1F2',
 
-  // Слейт (Slate - Neutrals, Backgrounds & Borders)
-  slate50: '#F8FAFC',
-  slate100: '#F1F5F9',
-  slate200: '#E2E8F0',
-  slate300: '#CBD5E1',
-  slate400: '#94A3B8',
-  slate500: '#64748B',
-  slate600: '#475569',
-  slate700: '#334155',
-  slate800: '#1E293B',
-  slate900: '#0F172A',
-  slate950: '#020617',
+  // Світла тема: Теплий фон та графіт
+  warmWhite: '#FAF8F5',
+  warmSurface: '#FFFFFF',
+  warmSurfaceSecondary: '#F4F1EA',
+  warmBorder: '#E8E4DA',
+  warmBorderStrong: '#D7D2C7',
+
+  // Графіт (текст для світлої теми)
+  graphite900: '#1F2024',
+  graphite700: '#484B54',
+  graphite500: '#717582',
+  graphite300: '#A4A8B5',
+
+  // Темна тема: Глибокий графіт та акценти
+  darkBg: '#121316',
+  darkSurface: '#191B20',
+  darkSurfaceSecondary: '#21242B',
+  darkBorder: '#2B2E38',
+  darkBorderStrong: '#3A3E4B',
+  darkTextPrimary: '#F6F7F9',
+  darkTextSecondary: '#A0A4B2',
+  darkTextTertiary: '#6E7280',
+  darkPurpleAccent: '#9D3BC4',
+  darkPurpleSubtle: '#2A1237',
 
   // Базові
   white: '#FFFFFF',
