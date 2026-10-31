@@ -1,2 +1,3 @@
-// Public API for Shared libraries (supabase, queryClient, storage, i18n)
-export {};
+export { default as i18n } from './i18n';
+export { queryClient } from './queryClient';
+export { supabase } from './supabase';

@@ -5,6 +5,8 @@
   "dependencies": {
     "@expo-google-fonts/manrope": "^0.4.2",
     "@expo/ui": "~57.0.22",
+    "@hookform/resolvers": "^6.0.2",
+    "@react-native-community/netinfo": "12.0.1",
     "@shopify/flash-list": "2.0.2",
     "@supabase/supabase-js": "^2.118.0",
     "@tanstack/react-query": "^5.104.3",
@@ -43,11 +45,14 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@types/react": "~19.2.2",
     "eslint": "^9.39.5",
     "eslint-config-expo": "~57.0.2",
     "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
+    "jest": "^30.5.2",
+    "jest-expo": "~57.0.6",
     "lint-staged": "^17.6.0",
     "prettier": "^3.9.10",
     "typescript": "~6.0.3"

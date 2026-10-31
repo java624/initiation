@@ -1,0 +1,1 @@
+export { SplashScreenView } from './SplashScreenView';
