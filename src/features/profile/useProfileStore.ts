@@ -1,21 +1,26 @@
 import { create } from 'zustand';
 
+export type ThemeMode = 'light' | 'dark' | 'system';
+
 interface ProfileState {
   username: string;
   notificationsEnabled: boolean;
   dailyGoalMinutes: number;
+  theme: ThemeMode; 
   setUsername: (name: string) => void;
   toggleNotifications: () => void;
-  setDailyGoal: (minutes: number) => void;
+  setDailyGoalMinutes: (minutes: number) => void;
+  setTheme: (theme: ThemeMode) => void; 
 }
 
 export const useProfileStore = create<ProfileState>((set) => ({
-  username: 'Користувач NovaFlow',
+  username: 'Иван',
   notificationsEnabled: true,
-  dailyGoalMinutes: 120,
-  
+  dailyGoalMinutes: 20,
+  theme: 'system', // 👈 Значение по умолчанию
   setUsername: (username) => set({ username }),
-  toggleNotifications: () => 
+  toggleNotifications: () =>
     set((state) => ({ notificationsEnabled: !state.notificationsEnabled })),
-  setDailyGoal: (dailyGoalMinutes) => set({ dailyGoalMinutes }),
+  setDailyGoalMinutes: (dailyGoalMinutes) => set({ dailyGoalMinutes }),
+  setTheme: (theme) => set({ theme }), 
 }));
