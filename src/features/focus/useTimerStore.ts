@@ -1,42 +1,77 @@
 import { create } from 'zustand';
 
+export type TimerMode = 'focus' | 'shortBreak' | 'longBreak';
+export type TimerStatus = 'idle' | 'running' | 'paused';
+
+const MODE_DURATIONS: Record<TimerMode, number> = {
+  focus: 25 * 60,
+  shortBreak: 5 * 60,
+  longBreak: 15 * 60,
+};
+
 interface TimerState {
+  mode: TimerMode;
+  status: TimerStatus;
   timeLeft: number;
-  isRunning: boolean;
-  mode: 'work' | 'break';
+  targetEndTimestamp: number | null;
+  setMode: (mode: TimerMode) => void;
   startTimer: () => void;
   pauseTimer: () => void;
   resetTimer: () => void;
   tick: () => void;
 }
 
-const WORK_TIME = 25 * 60; // 25 минут
-const BREAK_TIME = 5 * 60;  // 5 минут
-
 export const useTimerStore = create<TimerState>((set, get) => ({
-  timeLeft: WORK_TIME,
-  isRunning: false,
-  mode: 'work',
+  mode: 'focus',
+  status: 'idle',
+  timeLeft: MODE_DURATIONS.focus,
+  targetEndTimestamp: null,
 
-  startTimer: () => set({ isRunning: true }),
-  pauseTimer: () => set({ isRunning: false }),
-  resetTimer: () =>
-    set((state) => ({
-      isRunning: false,
-      timeLeft: state.mode === 'work' ? WORK_TIME : BREAK_TIME,
-    })),
+  setMode: (mode) => {
+    set({
+      mode,
+      status: 'idle',
+      timeLeft: MODE_DURATIONS[mode],
+      targetEndTimestamp: null,
+    });
+  },
+
+  startTimer: () => {
+    const { timeLeft } = get();
+
+    const targetEndTimestamp = Date.now() + timeLeft * 1000;
+    set({ status: 'running', targetEndTimestamp });
+  },
+
+  pauseTimer: () => {
+    const { targetEndTimestamp } = get();
+    if (targetEndTimestamp) {
+      const remainingSeconds = Math.max(0, Math.ceil((targetEndTimestamp - Date.now()) / 1000));
+      set({ status: 'paused', timeLeft: remainingSeconds, targetEndTimestamp: null });
+    } else {
+      set({ status: 'paused' });
+    }
+  },
+
+  resetTimer: () => {
+    const { mode } = get();
+    set({
+      status: 'idle',
+      timeLeft: MODE_DURATIONS[mode],
+      targetEndTimestamp: null,
+    });
+  },
 
   tick: () => {
-    const { timeLeft, mode } = get();
-    if (timeLeft > 1) {
-      set({ timeLeft: timeLeft - 1 });
+    const { status, targetEndTimestamp } = get();
+    if (status !== 'running' || !targetEndTimestamp) return;
+
+    const remainingSeconds = Math.max(0, Math.ceil((targetEndTimestamp - Date.now()) / 1000));
+    
+    if (remainingSeconds === 0) {
+      set({ status: 'idle', timeLeft: 0, targetEndTimestamp: null });
     } else {
-      const nextMode = mode === 'work' ? 'break' : 'work';
-      set({
-        mode: nextMode,
-        timeLeft: nextMode === 'work' ? WORK_TIME : BREAK_TIME,
-        isRunning: false,
-      });
+      set({ timeLeft: remainingSeconds });
     }
   },
 }));
