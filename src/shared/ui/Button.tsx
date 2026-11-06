@@ -1,37 +1,50 @@
 import React from 'react';
-import { TouchableOpacity, ActivityIndicator, StyleSheet, TouchableOpacityProps } from 'react-native';
-import { useTheme } from '@/hooks/use-theme';
-import { Text } from './Text';
+import { TouchableOpacity, Text, ActivityIndicator, StyleSheet, TouchableOpacityProps } from 'react-native';
+import { useTheme } from '../../hooks/use-theme';
+import { theme as globalTheme } from '../../constants/theme';
 
-interface ButtonProps extends TouchableOpacityProps {
+export interface ButtonProps extends TouchableOpacityProps {
   title: string;
+  variant?: 'primary' | 'secondary' | 'outline';
   loading?: boolean;
-  variant?: 'primary' | 'secondary';
 }
 
 export const Button: React.FC<ButtonProps> = ({
   title,
-  loading = false,
   variant = 'primary',
-  style,
+  loading = false,
   disabled,
+  style,
   ...props
 }) => {
-  const theme = useTheme();
-
-  const isPrimary = variant === 'primary';
+  const colorScheme = useTheme();
   
-  // Виправляємо theme.colors.tint на (theme as any).tint || '#007AFF'
-  const backgroundColor = isPrimary ? (theme as any).tint || '#007AFF' : 'transparent';
-  // Виправляємо theme.colors.text на theme.text
-  const textColor = isPrimary ? '#ffffff' : theme.text;
+  const isPrimary = variant === 'primary';
+  const isSecondary = variant === 'secondary';
+  const isOutline = variant === 'outline';
+
+  // Выбираем цвета строго по дизайн-токенам
+  const backgroundColor = isPrimary 
+    ? globalTheme.colors.primary 
+    : isSecondary 
+      ? globalTheme.colors.surface 
+      : 'transparent';
+
+  const textColor = isPrimary 
+    ? globalTheme.colors.background 
+    : isSecondary 
+      ? globalTheme.colors.text 
+      : globalTheme.colors.primary;
 
   return (
     <TouchableOpacity
       style={[
         styles.button,
-        { backgroundColor, borderColor: (theme as any).tint || '#007AFF' },
-        !isPrimary && styles.outline,
+        { 
+          backgroundColor,
+          borderColor: globalTheme.colors.primary,
+        },
+        isOutline && styles.outline,
         disabled && styles.disabled,
         style,
       ]}
@@ -50,21 +63,23 @@ export const Button: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 14,
+    paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 12,
+    borderRadius: globalTheme.radius.md,
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: 'transparent',
   },
   outline: {
-    borderWidth: 1,
+    backgroundColor: 'transparent',
+    borderColor: globalTheme.colors.primary,
   },
   disabled: {
     opacity: 0.5,
   },
   text: {
-    fontWeight: '600',
-    fontSize: 16,
+    fontSize: globalTheme.typography.sizes.md,
+    fontWeight: 'bold',
   },
 });

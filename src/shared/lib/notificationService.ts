@@ -34,8 +34,6 @@ export async function registerForPushNotificationsAsync() {
     return;
   }
 }
-
-// Функція відправки сповіщення про завершення таймера
 export async function scheduleTimerCompleteNotification(title: string, body: string) {
   await Notifications.scheduleNotificationAsync({
     content: {

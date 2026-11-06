@@ -1,10 +1,11 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { FocusTimer } from '@/features/focus/FocusTimer';
+import FocusTimer from '@/features/focus/FocusTimer';
 import { ProfileView } from '@/features/profile/ProfileView';
 import { DictionaryView } from '@/features/dictionary/DictionaryView';
 import { StatsView } from '@/features/stats/StatsView';
+
 
 export default function HomeScreen() {
   return (
