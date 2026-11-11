@@ -1,0 +1,55 @@
+{
+  "student": {
+    "greeting": "Привіт, {{name}}",
+    "subtitle": "Твій мовний потік активний. Продовжуй у тому ж дусі!",
+    "streak": "Серія: {{count}} дн.",
+    "nextLesson": "Наступний урок",
+    "noLessonTitle": "Розклад не заплановано",
+    "noLessonDesc": "Твій викладач ще не призначив наступне заняття.",
+    "openLesson": "Відкрити заняття",
+    "lessonNow": "Зараз",
+    "inMinutes": "Через {{minutes}} хв",
+    "inHours": "Через {{hours}} год {{minutes}} хв",
+    "inDays": "Через {{days}} дн.",
+    "lessonsBalance": "Залишок уроків",
+    "activeHomework": "Активні ДЗ",
+    "wordsTitle": "Слова на повторення",
+    "wordsDesc": "Повтори їх сьогодні, щоб закріпити в пам'яті",
+    "wordsAllDone": "Усе повторено. Чудова робота!",
+    "review": "Повторити",
+    "decksTitle": "Колоди слів",
+    "learnCards": "Вчити картки",
+    "noDecksTitle": "Колоди ще не призначені",
+    "noDecksDesc": "Вчитель призначить тобі колоди слів на платформі",
+    "defaultLanguage": "Іноземна мова",
+    "level": "Рівень {{level}}",
+    "pomodoroTitle": "Pomodoro 25/5",
+    "pomodoroDesc": "Сесії фокусу з таймером та сповіщеннями",
+    "startTimer": "Запустити",
+    "themeLight": "Світла тема",
+    "themeDark": "Темна тема"
+  },
+  "staff": {
+    "themeLight": "☀️ Світла",
+    "themeDark": "🌙 Темна",
+    "defaultUser": "Користувач",
+
+    "teacher": {
+      "createdDecks": "Створених колод",
+      "studentsCount": "Учнів на курсі",
+      "homeworksToCheck": "ДЗ на перевірку",
+      "upcomingLessons": "Найближчі уроки з учнями",
+      "noLessons": "Немає запланованих уроків",
+      "lessonsDescription": "Усі уроки з бази даних відображатимуться тут"
+    },
+
+    "admin": {
+      "usersCount": "Користувачів",
+      "totalDecks": "Всього колод",
+      "totalLessons": "Всього уроків",
+      "dashboardTitle": "Панель адміністратора NovaFlow",
+      "syncTitle": "Синхронізація з веб-платформою",
+      "syncDescription": "Усі бази даних підключені та працюють у режимі реального часу"
+    }
+  }
+}

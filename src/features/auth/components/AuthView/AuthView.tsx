@@ -37,6 +37,7 @@ const logoSource = require('@/../assets/images/novaflow-logo.png');
 const LANGUAGES = [
   { code: 'uk', label: 'UA' },
   { code: 'en', label: 'EN' },
+  { code: 'de', label: 'DE' },
 ] as const;
 
 const LANG_SPRING = { damping: 16, stiffness: 180, mass: 0.8 };
@@ -123,25 +124,15 @@ export const AuthView: React.FC<AuthViewProps> = ({ onSuccess }) => {
 
   // Повзунок, що перелітає між UA і EN
   const indicatorStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: interpolate(langProgress.value, [0, 1], [0, LANG_OPTION_WIDTH]) },
-    ],
+    transform: [{ translateX: interpolate(langProgress.value, [0, 1], [0, LANG_OPTION_WIDTH]) }],
   }));
 
   // Кольори підписів змінюються синхронно з повзунком
   const uaTextStyle = useAnimatedStyle(() => ({
-    color: interpolateColor(
-      langProgress.value,
-      [0, 1],
-      [colors.onAccent, colors.textSecondary],
-    ),
+    color: interpolateColor(langProgress.value, [0, 1], [colors.onAccent, colors.textSecondary]),
   }));
   const enTextStyle = useAnimatedStyle(() => ({
-    color: interpolateColor(
-      langProgress.value,
-      [0, 1],
-      [colors.textSecondary, colors.onAccent],
-    ),
+    color: interpolateColor(langProgress.value, [0, 1], [colors.textSecondary, colors.onAccent]),
   }));
 
   const buttonScaleStyle = useAnimatedStyle(() => ({
@@ -276,10 +267,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ onSuccess }) => {
           <View style={styles.innerContainer}>
             {/* Перемикач мови з повзунком */}
             <View style={styles.topBar}>
-              <View
-                style={styles.langSwitch}
-                accessibilityLabel={t('auth.languageSwitch')}
-              >
+              <View style={styles.langSwitch} accessibilityLabel={t('auth.languageSwitch')}>
                 <Animated.View style={[styles.langIndicator, indicatorStyle]} />
                 {LANGUAGES.map(({ code, label }) => (
                   <Pressable
@@ -327,9 +315,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ onSuccess }) => {
 
                 {showInfo && (
                   <View style={styles.infoBanner}>
-                    <Text style={styles.infoBannerText}>
-                      {t('auth.forgotPasswordInfo')}
-                    </Text>
+                    <Text style={styles.infoBannerText}>{t('auth.forgotPasswordInfo')}</Text>
                   </View>
                 )}
 
@@ -407,9 +393,9 @@ export const AuthView: React.FC<AuthViewProps> = ({ onSuccess }) => {
                       style={styles.gradientButton}
                     >
                       <LinearGradient
-                          colors={[colors.onAccent, 'transparent']}
-                          style={styles.buttonHighlight}
-                          pointerEvents="none"
+                        colors={[colors.onAccent, 'transparent']}
+                        style={styles.buttonHighlight}
+                        pointerEvents="none"
                       />
                       <View style={styles.buttonBorder} pointerEvents="none" />
                       <Animated.View
@@ -417,10 +403,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ onSuccess }) => {
                         pointerEvents="none"
                       />
                       <Pressable
-                        style={[
-                          styles.submitButton,
-                          isSubmitting && styles.submitButtonDisabled,
-                        ]}
+                        style={[styles.submitButton, isSubmitting && styles.submitButtonDisabled]}
                         onPress={handleSignIn}
                         onPressIn={() => {
                           buttonScale.value = withSpring(0.97, PRESS_SPRING);
@@ -438,9 +421,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ onSuccess }) => {
                           <ActivityIndicator color={colors.onAccent} size="small" />
                         ) : (
                           <>
-                            <Text style={styles.submitButtonText}>
-                              {t('auth.submitSignIn')}
-                            </Text>
+                            <Text style={styles.submitButtonText}>{t('auth.submitSignIn')}</Text>
                             <View style={styles.arrowSlot}>
                               <View style={styles.arrowCircle}>
                                 <View style={styles.arrowCircleBg} />

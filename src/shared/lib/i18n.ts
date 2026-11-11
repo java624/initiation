@@ -1,12 +1,18 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import en from '@/locales/en.json';
-import uk from '@/locales/uk.json';
+import en from '@/locales/en/en.json';
+import uk from '@/locales/uk/uk.json';
+import de from '@/locales/de/de.json';
+
+import enMain from '@/locales/en/main.json';
+import ukMain from '@/locales/uk/main.json';
+import deMain from '@/locales/de/main.json';
 
 export const defaultNS = 'translation';
 export const resources = {
-  uk: { translation: uk },
-  en: { translation: en },
+  uk: { translation: uk, main: ukMain },
+  en: { translation: en, main: enMain },
+  de: { translation: de, main: deMain },
 } as const;
 
 if (!i18n.isInitialized) {

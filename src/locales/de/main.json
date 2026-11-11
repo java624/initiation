@@ -1,0 +1,55 @@
+{
+  "student": {
+    "greeting": "Hallo, {{name}}",
+    "subtitle": "Dein Sprachlernprozess läuft. Weiter so!",
+    "streak": "Lernserie: {{count}} Tage",
+    "nextLesson": "Nächste Unterrichtsstunde",
+    "noLessonTitle": "Keine Unterrichtsstunden geplant",
+    "openLesson": "Unterricht öffnen",
+    "lessonNow": "Jetzt",
+    "inMinutes": "In {{minutes}} Min.",
+    "inHours": "In {{hours}} Std. {{minutes}} Min.",
+    "inDays": "In {{days}} Tagen",
+    "lessonsBalance": "Verbleibende Unterrichtsstunden",
+    "activeHomework": "Aktive Hausaufgaben",
+    "wordsTitle": "Zu wiederholende Wörter",
+    "wordsDesc": "Wiederhole sie heute, damit du sie dir besser einprägst",
+    "wordsAllDone": "Alles wiederholt. Gut gemacht!",
+    "review": "Wiederholen",
+    "decksTitle": "Vokabelkartensätze",
+    "learnCards": "Karteikarten lernen",
+    "noDecksTitle": "Noch keine Kartensätze zugewiesen",
+    "noDecksDesc": "Deine Lehrkraft wird dir Vokabelkartensätze auf der Plattform zuweisen",
+    "defaultLanguage": "Fremdsprache",
+    "level": "Niveau {{level}}",
+    "pomodoroTitle": "Pomodoro 25/5",
+    "pomodoroDesc": "Konzentrierte Lerneinheiten mit Timer und Benachrichtigungen",
+    "startTimer": "Starten",
+    "themeLight": "Helles Design",
+    "noLessonDesc": "Deine Lehrkraft hat noch keine nächste Unterrichtsstunde geplant.",
+    "themeDark": "Dunkles Design"
+  },
+  "staff": {
+    "themeLight": "☀️ Hell",
+    "themeDark": "🌙 Dunkel",
+    "defaultUser": "Benutzer",
+
+    "teacher": {
+      "createdDecks": "Erstellte Kartensätze",
+      "studentsCount": "Eingeschriebene Schüler",
+      "homeworksToCheck": "Zu überprüfende Hausaufgaben",
+      "upcomingLessons": "Bevorstehende Unterrichtsstunden mit Schülern",
+      "noLessons": "Keine Unterrichtsstunden geplant",
+      "lessonsDescription": "Alle Unterrichtsstunden aus der Datenbank werden hier angezeigt"
+    },
+
+    "admin": {
+      "usersCount": "Benutzer",
+      "totalDecks": "Kartensätze insgesamt",
+      "totalLessons": "Unterrichtsstunden insgesamt",
+      "dashboardTitle": "NovaFlow Admin-Dashboard",
+      "syncTitle": "Synchronisierung mit der Webplattform",
+      "syncDescription": "Alle Datenbanken sind verbunden und werden in Echtzeit synchronisiert"
+    }
+  }
+}

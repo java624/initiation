@@ -1,4 +1,3 @@
-import React from 'react';
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/shared/ui/Button';
@@ -12,12 +11,17 @@ import { MainDashboardProps } from '../MainDashboard/MainDashboard.types';
 
 export const StaffDashboard = ({ onSignOut }: MainDashboardProps) => {
   const styles = useStyles();
-  const { t } = useTranslation();
+
+  const { t } = useTranslation('translation');
+  const { t: tMain, i18n } = useTranslation('main');
+
   const { user, signOut } = useAuth();
   const { mode, setMode, isDark } = useThemeController();
   const { teacherData, adminData } = useDashboardData();
 
   const currentRole: UserRole = user?.role ?? 'student';
+
+  const locale = i18n.language.startsWith('uk') ? 'uk-UA' : 'en-GB';
 
   const handleToggleTheme = () => {
     if (mode === 'system') {
@@ -60,19 +64,16 @@ export const StaffDashboard = ({ onSignOut }: MainDashboardProps) => {
           <View style={styles.brandBadge}>
             <Text style={styles.brandText}>{t('common.appName')}</Text>
           </View>
+
           <View style={styles.headerActions}>
             <Button
               variant="ghost"
               size="sm"
-              label={isDark ? '☀️ Light' : '🌙 Dark'}
+              label={isDark ? tMain('staff.themeLight') : tMain('staff.themeDark')}
               onPress={handleToggleTheme}
             />
-            <Button
-              variant="ghost"
-              size="sm"
-              label={t('auth.logout')}
-              onPress={handleSignOut}
-            />
+
+            <Button variant="ghost" size="sm" label={t('auth.logout')} onPress={handleSignOut} />
           </View>
         </View>
 
@@ -80,11 +81,14 @@ export const StaffDashboard = ({ onSignOut }: MainDashboardProps) => {
         <View style={styles.profileCard}>
           <View style={styles.profileTopRow}>
             <View style={styles.profileInfo}>
-              <Text variant="h2">{user?.name || user?.email || 'Користувач'}</Text>
+              <Text variant="h2">{user?.name || user?.email || tMain('staff.defaultUser')}</Text>
+
               <Text variant="caption" color="secondary">
-                {user?.email} {user?.learningLanguage ? `• 🌍 ${user.learningLanguage}` : ''}
+                {user?.email}
+                {user?.learningLanguage ? ` • 🌍 ${user.learningLanguage}` : ''}
               </Text>
             </View>
+
             <View style={[styles.rolePill, rolePillStyles[currentRole]]}>
               <Text style={[styles.rolePillText, rolePillTextStyles[currentRole]]}>
                 {roleLabels[currentRole]}
@@ -93,44 +97,54 @@ export const StaffDashboard = ({ onSignOut }: MainDashboardProps) => {
           </View>
         </View>
 
-        {/* 👨‍🏫 ROLE: TEACHER EXPERIENCE (Live data from DB) */}
+        {/* TEACHER EXPERIENCE */}
         {currentRole === 'teacher' && (
           <>
             <View style={styles.grid}>
               <View style={styles.statCard}>
-                <Text variant="h1" style={styles.statIcon}>📚</Text>
-                <Text style={styles.statValue}>
-                  {teacherData ? teacherData.myPacketsCount : 0}
+                <Text variant="h1" style={styles.statIcon}>
+                  📚
                 </Text>
-                <Text style={styles.statLabel}>Створених колод</Text>
+
+                <Text style={styles.statValue}>{teacherData ? teacherData.myPacketsCount : 0}</Text>
+
+                <Text style={styles.statLabel}>{tMain('staff.teacher.createdDecks')}</Text>
               </View>
 
               <View style={styles.statCard}>
-                <Text variant="h1" style={styles.statIcon}>👥</Text>
-                <Text style={styles.statValue}>
-                  {teacherData ? teacherData.studentsCount : 0}
+                <Text variant="h1" style={styles.statIcon}>
+                  👥
                 </Text>
-                <Text style={styles.statLabel}>Учнів на курсі</Text>
+
+                <Text style={styles.statValue}>{teacherData ? teacherData.studentsCount : 0}</Text>
+
+                <Text style={styles.statLabel}>{tMain('staff.teacher.studentsCount')}</Text>
               </View>
 
               <View style={styles.statCard}>
-                <Text variant="h1" style={styles.statIcon}>📝</Text>
+                <Text variant="h1" style={styles.statIcon}>
+                  📝
+                </Text>
+
                 <Text style={styles.statValue}>
                   {teacherData ? teacherData.pendingHomeworksToCheck : 0}
                 </Text>
-                <Text style={styles.statLabel}>ДЗ на перевірку</Text>
+
+                <Text style={styles.statLabel}>{tMain('staff.teacher.homeworksToCheck')}</Text>
               </View>
             </View>
 
-            <Text style={styles.sectionTitle}>🗓 Найближчі уроки з учнями</Text>
+            <Text style={styles.sectionTitle}>🗓 {tMain('staff.teacher.upcomingLessons')}</Text>
+
             {teacherData?.upcomingLessons && teacherData.upcomingLessons.length > 0 ? (
               teacherData.upcomingLessons.map((l) => (
                 <View key={`lesson-${l.id}`} style={styles.actionCard}>
                   <View style={styles.actionCardRow}>
                     <View style={styles.actionCardInfo}>
                       <Text variant="h3">{l.title}</Text>
+
                       <Text variant="caption" color="secondary">
-                        {new Date(l.start_time).toLocaleString('uk-UA', {
+                        {new Date(l.start_time).toLocaleString(locale, {
                           day: 'numeric',
                           month: 'short',
                           hour: '2-digit',
@@ -144,9 +158,10 @@ export const StaffDashboard = ({ onSignOut }: MainDashboardProps) => {
             ) : (
               <View style={styles.actionCard}>
                 <View style={styles.actionCardInfo}>
-                  <Text variant="h3">Немає запланованих уроків</Text>
+                  <Text variant="h3">{tMain('staff.teacher.noLessons')}</Text>
+
                   <Text variant="caption" color="secondary">
-                    Усі уроки з бази даних відображатимуться тут
+                    {tMain('staff.teacher.lessonsDescription')}
                   </Text>
                 </View>
               </View>
@@ -154,42 +169,50 @@ export const StaffDashboard = ({ onSignOut }: MainDashboardProps) => {
           </>
         )}
 
-        {/* ⚡ ROLE: ADMIN EXPERIENCE (Live data from DB) */}
+        {/* ADMIN EXPERIENCE */}
         {currentRole === 'admin' && (
           <>
             <View style={styles.grid}>
               <View style={styles.statCard}>
-                <Text variant="h1" style={styles.statIcon}>👥</Text>
-                <Text style={styles.statValue}>
-                  {adminData ? adminData.totalProfilesCount : 0}
+                <Text variant="h1" style={styles.statIcon}>
+                  👥
                 </Text>
-                <Text style={styles.statLabel}>Користувачів</Text>
+
+                <Text style={styles.statValue}>{adminData ? adminData.totalProfilesCount : 0}</Text>
+
+                <Text style={styles.statLabel}>{tMain('staff.admin.usersCount')}</Text>
               </View>
 
               <View style={styles.statCard}>
-                <Text variant="h1" style={styles.statIcon}>📦</Text>
-                <Text style={styles.statValue}>
-                  {adminData ? adminData.totalPacketsCount : 0}
+                <Text variant="h1" style={styles.statIcon}>
+                  📦
                 </Text>
-                <Text style={styles.statLabel}>Всього колод</Text>
+
+                <Text style={styles.statValue}>{adminData ? adminData.totalPacketsCount : 0}</Text>
+
+                <Text style={styles.statLabel}>{tMain('staff.admin.totalDecks')}</Text>
               </View>
 
               <View style={styles.statCard}>
-                <Text variant="h1" style={styles.statIcon}>🎓</Text>
-                <Text style={styles.statValue}>
-                  {adminData ? adminData.totalLessonsCount : 0}
+                <Text variant="h1" style={styles.statIcon}>
+                  🎓
                 </Text>
-                <Text style={styles.statLabel}>Всього уроків</Text>
+
+                <Text style={styles.statValue}>{adminData ? adminData.totalLessonsCount : 0}</Text>
+
+                <Text style={styles.statLabel}>{tMain('staff.admin.totalLessons')}</Text>
               </View>
             </View>
 
-            <Text style={styles.sectionTitle}>Панель адміністратора NovaFlow</Text>
+            <Text style={styles.sectionTitle}>{tMain('staff.admin.dashboardTitle')}</Text>
+
             <View style={styles.actionCard}>
               <View style={styles.actionCardRow}>
                 <View style={styles.actionCardInfo}>
-                  <Text variant="h3">Синхронізація з веб-платформою</Text>
+                  <Text variant="h3">{tMain('staff.admin.syncTitle')}</Text>
+
                   <Text variant="caption" color="secondary">
-                    Усі бази даних підключені та працюють у режимі реального часу
+                    {tMain('staff.admin.syncDescription')}
                   </Text>
                 </View>
               </View>

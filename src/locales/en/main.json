@@ -1,0 +1,55 @@
+{
+  "student": {
+    "greeting": "Hi, {{name}}",
+    "subtitle": "Your language flow is active. Keep it up!",
+    "streak": "Streak: {{count}} days",
+    "nextLesson": "Next lesson",
+    "noLessonTitle": "No lessons scheduled",
+    "openLesson": "Open lesson",
+    "lessonNow": "Now",
+    "inMinutes": "In {{minutes}} min",
+    "inHours": "In {{hours}} h {{minutes}} min",
+    "inDays": "In {{days}} d",
+    "lessonsBalance": "Lessons left",
+    "activeHomework": "Active homework",
+    "wordsTitle": "Words to review",
+    "wordsDesc": "Review them today to lock them into memory",
+    "wordsAllDone": "All reviewed. Great job!",
+    "review": "Review",
+    "decksTitle": "Word decks",
+    "learnCards": "Study cards",
+    "noDecksTitle": "No decks assigned yet",
+    "noDecksDesc": "Your teacher will assign word decks on the platform",
+    "defaultLanguage": "Foreign language",
+    "level": "Level {{level}}",
+    "pomodoroTitle": "Pomodoro 25/5",
+    "pomodoroDesc": "Focus sessions with a timer and notifications",
+    "startTimer": "Start",
+    "themeLight": "Light theme",
+    "noLessonDesc": "Your teacher hasn't scheduled the next lesson yet.",
+    "themeDark": "Dark theme"
+  },
+  "staff": {
+    "themeLight": "☀️ Light",
+    "themeDark": "🌙 Dark",
+    "defaultUser": "User",
+
+    "teacher": {
+      "createdDecks": "Created decks",
+      "studentsCount": "Students enrolled",
+      "homeworksToCheck": "Homework to review",
+      "upcomingLessons": "Upcoming lessons with students",
+      "noLessons": "No scheduled lessons",
+      "lessonsDescription": "All lessons from the database will appear here"
+    },
+
+    "admin": {
+      "usersCount": "Users",
+      "totalDecks": "Total decks",
+      "totalLessons": "Total lessons",
+      "dashboardTitle": "NovaFlow Admin Dashboard",
+      "syncTitle": "Web platform synchronization",
+      "syncDescription": "All databases are connected and running in real time"
+    }
+  }
+}

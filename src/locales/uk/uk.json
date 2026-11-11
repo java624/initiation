@@ -91,36 +91,6 @@
     "demoAdmin": "Увійти як Адмін",
     "currentRole": "Поточна роль"
   },
-  "student": {
-    "greeting": "Привіт, {{name}}",
-    "subtitle": "Твій мовний потік активний. Продовжуй у тому ж дусі!",
-    "streak": "Серія: {{count}} дн.",
-    "nextLesson": "Наступний урок",
-    "noLessonTitle": "Розклад не заплановано",
-    "noLessonDesc": "Твій викладач ще не призначив наступне заняття.",
-    "openLesson": "Відкрити заняття",
-    "lessonNow": "Зараз",
-    "inMinutes": "Через {{minutes}} хв",
-    "inHours": "Через {{hours}} год {{minutes}} хв",
-    "inDays": "Через {{days}} дн.",
-    "lessonsBalance": "Залишок уроків",
-    "activeHomework": "Активні ДЗ",
-    "wordsTitle": "Слова на повторення",
-    "wordsDesc": "Повтори їх сьогодні, щоб закріпити в пам'яті",
-    "wordsAllDone": "Усе повторено. Чудова робота!",
-    "review": "Повторити",
-    "decksTitle": "Колоди слів",
-    "learnCards": "Вчити картки",
-    "noDecksTitle": "Колоди ще не призначені",
-    "noDecksDesc": "Вчитель призначить тобі колоди слів на платформі",
-    "defaultLanguage": "Іноземна мова",
-    "level": "Рівень {{level}}",
-    "pomodoroTitle": "Pomodoro 25/5",
-    "pomodoroDesc": "Сесії фокусу з таймером та сповіщеннями",
-    "startTimer": "Запустити",
-    "themeLight": "Світла тема",
-    "themeDark": "Темна тема"
-  },
   "tabs": {
     "home": "Головна",
     "lessons": "Заняття",
@@ -129,7 +99,7 @@
     "profile": "Профіль",
     "comingSoon": "Цей розділ скоро з'явиться"
   },
-    "lessons": {
+  "lessons": {
     "title": "Заняття",
     "subtitle": "Твій розклад",
     "upcoming": "Майбутні",
