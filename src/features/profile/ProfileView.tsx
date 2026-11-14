@@ -50,7 +50,7 @@ export const ProfileView: React.FC = () => {
             </View>
           ) : (
             <View style={styles.infoContainer}>
-              <Text variant="subtitle">Ім&aposя: {username}</Text>
+              <Text variant="subtitle">Ім’я: {username}</Text>
               <Button
                 label="Редагувати профіль"
                 onPress={() => setIsEditing(true)}
