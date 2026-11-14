@@ -19,20 +19,12 @@ export const DictionaryView: React.FC = () => {
   return (
     <View style={styles.container}>
       <Card style={styles.card}>
-        <Text variant="title">📚 Словник NovaFlow</Text>
+        <Text variant="h2">📚 Словник NovaFlow</Text>
 
         <View style={styles.inputGroup}>
-          <Input
-            placeholder="Слово (напр. Focus)"
-            value={word}
-            onChangeText={setWord}
-          />
-          <Input
-            placeholder="Переклад"
-            value={translation}
-            onChangeText={setTranslation}
-          />
-          <Button title="Додати слово" onPress={handleAdd} />
+          <Input placeholder="Слово (напр. Focus)" value={word} onChangeText={setWord} />
+          <Input placeholder="Переклад" value={translation} onChangeText={setTranslation} />
+          <Button label="Додати слово" onPress={handleAdd} />
         </View>
 
         <View style={styles.list}>

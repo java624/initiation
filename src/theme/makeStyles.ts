@@ -1,22 +1,31 @@
 import { useMemo } from 'react';
-import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-
-import { Theme } from '@/theme';
-import { useTheme } from '@/theme/useTheme';
-
-type Styles = Record<string, ViewStyle | TextStyle | ImageStyle>;
+import { StyleSheet } from 'react-native';
+import { Theme } from './types';
+import { useTheme } from './useTheme';
 
 /**
- * const useStyles = makeStyles(({ colors, spacing, radius }) => ({
- *   container: { padding: spacing.base, backgroundColor: colors.surface },
- * }));
+ * Хелпер для створення типізованих стилів на базі токенів теми.
+ * Забезпечує динамічну зміну теми та усуває використання «сирих» або інлайн-значень.
  *
- * В компоненте: const styles = useStyles();
- * Стили пересоздаются при смене темы (светлая/тёмная).
+ * @example
+ * export const useStyles = makeStyles(({ colors, spacing, radius }) => ({
+ *   container: {
+ *     padding: spacing.lg,
+ *     borderRadius: radius.md,
+ *     backgroundColor: colors.surface,
+ *   },
+ * }));
  */
-export function makeStyles<T extends Styles>(factory: (theme: Theme) => T) {
-  return function useStyles(): T {
+export const makeStyles = <
+  T extends StyleSheet.NamedStyles<T> | StyleSheet.NamedStyles<any>,
+  P extends Record<string, any> = Record<string, never>,
+>(
+  stylesFactory: (theme: Theme, props?: P) => T,
+) => {
+  return (props?: P): T => {
     const theme = useTheme();
-    return useMemo(() => StyleSheet.create(factory(theme)), [theme]);
+    return useMemo(() => {
+      return StyleSheet.create(stylesFactory(theme, props));
+    }, [theme, props]);
   };
-}
+};

@@ -2,17 +2,12 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Switch, Alert } from 'react-native';
 import { Button, Card, Input, Text, Screen } from '@/shared/ui';
 import { useProfileStore } from './useProfileStore';
+import { useThemeController } from '@/theme';
 
 export const ProfileView: React.FC = () => {
-  const {
-    username,
-    notificationsEnabled,
-    dailyGoalMinutes,
-    theme,
-    setUsername,
-    toggleNotifications,
-    setTheme,
-  } = useProfileStore();
+  const { mode, setMode } = useThemeController();
+  const { username, notificationsEnabled, dailyGoalMinutes, setUsername, toggleNotifications } =
+    useProfileStore();
 
   const [isEditing, setIsEditing] = useState(false);
   const [tempName, setTempName] = useState(username);
@@ -27,7 +22,7 @@ export const ProfileView: React.FC = () => {
   const handleLogout = () => {
     Alert.alert('Вихід', 'Ви дійсно хочете вийти з акаунта?', [
       { text: 'Скасувати', style: 'cancel' },
-      { text: 'Вийти', style: 'destructive', onPress: () => console.log('Logged out') },
+      { text: 'Вийти', style: 'destructive', onPress: () => console.warn('Logged out') },
     ]);
   };
 
@@ -36,7 +31,7 @@ export const ProfileView: React.FC = () => {
       <View style={styles.container}>
         {/* Блок профілю */}
         <Card style={styles.card}>
-          <Text variant="title">👤 Профіль</Text>
+          <Text variant="h2">👤 Профіль</Text>
 
           {/* Аватар та Email за ТЗ */}
           <View style={styles.userInfoRow}>
@@ -50,18 +45,14 @@ export const ProfileView: React.FC = () => {
 
           {isEditing ? (
             <View style={styles.editContainer}>
-              <Input
-                value={tempName}
-                onChangeText={setTempName}
-                placeholder="Введіть ваше ім'я"
-              />
-              <Button title="Зберегти" onPress={handleSave} />
+              <Input value={tempName} onChangeText={setTempName} placeholder="Введіть ваше ім'я" />
+              <Button label="Зберегти" onPress={handleSave} />
             </View>
           ) : (
             <View style={styles.infoContainer}>
-              <Text variant="subtitle">Ім'я: {username}</Text>
+              <Text variant="subtitle">Ім&aposя: {username}</Text>
               <Button
-                title="Редагувати профіль"
+                label="Редагувати профіль"
                 onPress={() => setIsEditing(true)}
                 variant="secondary"
               />
@@ -70,20 +61,17 @@ export const ProfileView: React.FC = () => {
 
           {/* Кнопка виходу за ТЗ */}
           <View style={styles.logoutWrapper}>
-            <Button title="Вийти з акаунта" onPress={handleLogout} variant="secondary" />
+            <Button label="Вийти з акаунта" onPress={handleLogout} variant="secondary" />
           </View>
         </Card>
 
         {/* Блок налаштувань */}
         <Card style={styles.card}>
-          <Text variant="title">⚙️ Налаштування</Text>
+          <Text variant="h2">⚙️ Налаштування</Text>
 
           <View style={styles.settingRow}>
             <Text>Сповіщення</Text>
-            <Switch
-              value={notificationsEnabled}
-              onValueChange={toggleNotifications}
-            />
+            <Switch value={notificationsEnabled} onValueChange={toggleNotifications} />
           </View>
 
           <View style={styles.settingRow}>
@@ -95,19 +83,19 @@ export const ProfileView: React.FC = () => {
             <Text style={styles.label}>Тема оформлення:</Text>
             <View style={styles.buttonRow}>
               <Button
-                title="Світла"
-                onPress={() => setTheme?.('light')}
-                variant={theme === 'light' ? 'primary' : 'secondary'}
+                label="Світла"
+                onPress={() => setMode?.('light')}
+                variant={mode === 'light' ? 'primary' : 'secondary'}
               />
               <Button
-                title="Темна"
-                onPress={() => setTheme?.('dark')}
-                variant={theme === 'dark' ? 'primary' : 'secondary'}
+                label="Темна"
+                onPress={() => setMode?.('dark')}
+                variant={mode === 'dark' ? 'primary' : 'secondary'}
               />
               <Button
-                title="Системна"
-                onPress={() => setTheme?.('system')}
-                variant={theme === 'system' ? 'primary' : 'secondary'}
+                label="Системна"
+                onPress={() => setMode?.('system')}
+                variant={mode === 'system' ? 'primary' : 'secondary'}
               />
             </View>
           </View>

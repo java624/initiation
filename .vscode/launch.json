@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "▶ Run on Android (Expo Go)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "android:go"],
+      "console": "integratedTerminal"
+    }
+  ]
+}

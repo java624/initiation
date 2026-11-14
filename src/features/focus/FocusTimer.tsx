@@ -1,22 +1,32 @@
-import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { useTimerStore } from './useTimerStore';
-import { makeStyles } from '../../constants/theme';
+import { useEffect } from 'react';
+import { Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { scheduleTimerCompleteNotification } from '../../shared/lib/notificationService';
+
+import { scheduleTimerCompleteNotification } from '@/shared/lib/notificationService';
+import { Button, Text } from '@/shared/ui';
+import { makeStyles } from '@/theme';
+
+import { useTimerStore } from './useTimerStore';
+
+const MODES = [
+  { mode: 'focus', key: 'timer.focus', fallback: 'Фокус' },
+  { mode: 'shortBreak', key: 'timer.shortBreak', fallback: 'Коротка перерва' },
+  { mode: 'longBreak', key: 'timer.longBreak', fallback: 'Довга перерва' },
+] as const;
+
+const TIMER_SIZE = 240;
+const TIMER_BORDER = 6;
+const TIMER_FONT_SIZE = 56;
 
 export default function FocusScreen() {
   const styles = useStyles();
   const { t } = useTranslation();
-  const { mode, status, timeLeft, setMode, startTimer, pauseTimer, resetTimer, tick } = useTimerStore();
+  const { mode, status, timeLeft, setMode, startTimer, pauseTimer, resetTimer, tick } =
+    useTimerStore();
 
   useEffect(() => {
-    let interval: ReturnType<typeof setInterval>;
-    if (status === 'running') {
-      interval = setInterval(() => {
-        tick();
-      }, 1000);
-    }
+    if (status !== 'running') return;
+    const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
   }, [status, tick]);
 
@@ -24,7 +34,7 @@ export default function FocusScreen() {
     if (timeLeft === 0 && status === 'idle') {
       scheduleTimerCompleteNotification(
         t('timer.completedTitle', 'Сесія завершена! 🎉'),
-        t('timer.completedBody', 'Час зробити перерву або продовжити роботу.')
+        t('timer.completedBody', 'Час зробити перерву або продовжити роботу.'),
       );
     }
   }, [timeLeft, status, t]);
@@ -36,119 +46,94 @@ export default function FocusScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.modesContainer}>
-        <TouchableOpacity 
-          style={[styles.modeButton, mode === 'focus' && styles.activeModeButton]} 
-          onPress={() => setMode('focus')}
-        >
-          <Text style={[styles.modeText, mode === 'focus' && styles.activeModeText]}>
-            {t('timer.focus', 'Фокус')}
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={[styles.modeButton, mode === 'shortBreak' && styles.activeModeButton]} 
-          onPress={() => setMode('shortBreak')}
-        >
-          <Text style={[styles.modeText, mode === 'shortBreak' && styles.activeModeText]}>
-            {t('timer.shortBreak', 'Коротка перерва')}
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={[styles.modeButton, mode === 'longBreak' && styles.activeModeButton]} 
-          onPress={() => setMode('longBreak')}
-        >
-          <Text style={[styles.modeText, mode === 'longBreak' && styles.activeModeText]}>
-            {t('timer.longBreak', 'Довга перерва')}
-          </Text>
-        </TouchableOpacity>
+        {MODES.map((item) => {
+          const active = mode === item.mode;
+          const label = t(item.key, item.fallback);
+          return (
+            <Pressable
+              key={item.mode}
+              accessibilityRole="button"
+              accessibilityLabel={label}
+              accessibilityState={{ selected: active }}
+              style={[styles.modeButton, active && styles.activeModeButton]}
+              onPress={() => setMode(item.mode)}
+            >
+              <Text variant="caption" style={active ? styles.activeModeText : styles.modeText}>
+                {label}
+              </Text>
+            </Pressable>
+          );
+        })}
       </View>
 
       <View style={styles.timerCircle}>
-        <Text style={styles.timerText}>{formattedTime}</Text>
+        <Text variant="h1" style={styles.timerText}>
+          {formattedTime}
+        </Text>
       </View>
 
       <View style={styles.controlsContainer}>
         {status === 'running' ? (
-          <TouchableOpacity style={styles.button} onPress={pauseTimer}>
-            <Text style={styles.buttonText}>{t('timer.pause', 'Пауза')}</Text>
-          </TouchableOpacity>
+          <Button label={t('timer.pause', 'Пауза')} variant="primary" onPress={pauseTimer} />
         ) : (
-          <TouchableOpacity style={styles.button} onPress={startTimer}>
-            <Text style={styles.buttonText}>{t('timer.start', 'Старт')}</Text>
-          </TouchableOpacity>
+          <Button label={t('timer.start', 'Старт')} variant="primary" onPress={startTimer} />
         )}
-
-        <TouchableOpacity style={[styles.button, styles.resetButton]} onPress={resetTimer}>
-          <Text style={styles.buttonText}>{t('timer.reset', 'Скинути')}</Text>
-        </TouchableOpacity>
+        <Button label={t('timer.reset', 'Скинути')} variant="secondary" onPress={resetTimer} />
       </View>
     </View>
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ colors, spacing, radius, typography }) => ({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.colors.background,
-    padding: theme.spacing.base,
+    backgroundColor: colors.background,
+    padding: spacing.sm,
   },
   modesContainer: {
     flexDirection: 'row',
-    marginBottom: theme.spacing.xl,
-    gap: theme.spacing.sm,
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginBottom: spacing.lg,
+    gap: spacing.xs,
   },
   modeButton: {
-    paddingVertical: theme.spacing.sm,
-    paddingHorizontal: theme.spacing.md,
-    borderRadius: theme.radius.md,
-    backgroundColor: theme.colors.surface,
+    minHeight: 44,
+    justifyContent: 'center',
+    paddingHorizontal: spacing.sm,
+    borderRadius: radius.sm,
+    backgroundColor: colors.surface,
   },
   activeModeButton: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: colors.accent,
   },
   modeText: {
-    color: theme.colors.text,
-    fontSize: theme.typography.sizes.sm,
+    color: colors.textPrimary,
   },
   activeModeText: {
-    color: theme.colors.background,
-    fontWeight: 'bold',
+    ...typography.bodyMedium,
+    color: colors.onAccent,
   },
   timerCircle: {
-    width: 240,
-    height: 240,
-    borderRadius: 120,
-    borderWidth: 6,
-    borderColor: theme.colors.primary,
+    width: TIMER_SIZE,
+    height: TIMER_SIZE,
+    borderRadius: TIMER_SIZE / 2,
+    borderWidth: TIMER_BORDER,
+    borderColor: colors.accent,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: theme.spacing.xl,
-    backgroundColor: theme.colors.surface,
+    marginBottom: spacing.lg,
+    backgroundColor: colors.surface,
   },
   timerText: {
-    fontSize: theme.typography.sizes.xxl,
-    fontWeight: 'bold',
-    color: theme.colors.text,
+    fontSize: TIMER_FONT_SIZE,
+    lineHeight: TIMER_FONT_SIZE + spacing.xs,
+    color: colors.textPrimary,
   },
   controlsContainer: {
     flexDirection: 'row',
-    gap: theme.spacing.md,
-  },
-  button: {
-    paddingVertical: theme.spacing.md,
-    paddingHorizontal: theme.spacing.xl,
-    backgroundColor: theme.colors.primary,
-    borderRadius: theme.radius.md,
-  },
-  resetButton: {
-    backgroundColor: theme.colors.error,
-  },
-  buttonText: {
-    color: theme.colors.background,
-    fontWeight: 'bold',
-    fontSize: theme.typography.sizes.md,
+    gap: spacing.sm,
   },
 }));

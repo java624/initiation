@@ -1,33 +1,29 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Screen } from '../../shared/ui/Screen';
-import { Text } from '../../shared/ui/Text';
-import { Card } from '../../shared/ui/Card';
-import { Button } from '../../shared/ui/Button';
-import { theme } from '../../constants/theme';
+import { View } from 'react-native';
+
+import { Button, Card, Screen, Text } from '@/shared/ui';
+import { fontFamilies, makeStyles } from '@/theme';
 
 export default function HomeScreen() {
   const router = useRouter();
-
-  // Заглушки данных (позже подключим сторы)
   const streakDays = 5;
   const completedSessions = 3;
   const targetSessions = 8;
   const pendingWordsCount = 12;
 
   const progressPercent = Math.min((completedSessions / targetSessions) * 100, 100);
+  const styles = useStyles({ progressPercent });
 
   return (
     <Screen style={styles.container}>
       {/* Приветствие и Стрік 🔥 */}
       <View style={styles.header}>
         <View>
-          <Text variant="title">Привіт, Іване! 👋</Text>
+          <Text variant="h2">Привіт, Іване! 👋</Text>
           <Text variant="caption">Час продуктивного фокусу</Text>
         </View>
         <Card style={styles.streakCard}>
-          <Text style={styles.streakText}>🔥 {streakDays} днів</Text>
+          <Text variant="bodyMedium">🔥 {streakDays} днів</Text>
         </Card>
       </View>
 
@@ -35,10 +31,12 @@ export default function HomeScreen() {
       <Card style={styles.sectionCard}>
         <View style={styles.sectionHeader}>
           <Text variant="subtitle">Денна ціль</Text>
-          <Text variant="body">{completedSessions} / {targetSessions} сесій</Text>
+          <Text variant="body">
+            {completedSessions} / {targetSessions} сесій
+          </Text>
         </View>
         <View style={styles.progressBarBackground}>
-          <View style={[styles.progressBarFill, { width: `${progressPercent}%` }]} />
+          <View style={styles.progressBarFill} />
         </View>
       </Card>
 
@@ -48,11 +46,11 @@ export default function HomeScreen() {
         <Text variant="body" style={styles.cardDesc}>
           Сьогодні до повторення: <Text style={styles.boldText}>{pendingWordsCount} слів</Text>
         </Text>
-        <Button 
-  title="Почати вчити" 
-  variant="primary" 
-  onPress={() => router.push('/dictionary' as any)} 
-/>
+        <Button
+          label="Почати вчити"
+          variant="primary"
+          onPress={() => router.push('/dictionary' as any)}
+        />
       </Card>
 
       {/* Швидкий запуск Pomodoro */}
@@ -61,20 +59,24 @@ export default function HomeScreen() {
         <Text variant="body" style={styles.cardDesc}>
           Режим фокусу: 25 хвилин
         </Text>
-<Button 
-  title="Швидкий старт" 
-  variant="secondary" 
-  onPress={() => router.push('/(tabs)/focus' as any)} 
-/>
+        <Button
+          label="Швидкий старт"
+          variant="secondary"
+          onPress={() => router.push('/(tabs)/focus' as any)}
+        />
       </Card>
     </Screen>
   );
 }
 
-const styles = StyleSheet.create({
+type StyleProps = { progressPercent: number };
+
+const PROGRESS_BAR_HEIGHT = 8;
+
+const useStyles = makeStyles(({ colors, spacing, radius }, props?: StyleProps) => ({
   container: {
-    padding: theme.spacing.base,
-    gap: theme.spacing.base,
+    padding: spacing.sm,
+    gap: spacing.sm,
   },
   header: {
     flexDirection: 'row',
@@ -82,17 +84,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   streakCard: {
-    paddingVertical: theme.spacing.sm,
-    paddingHorizontal: theme.spacing.md,
-    backgroundColor: theme.colors.surface,
-  },
-  streakText: {
-    fontWeight: 'bold',
-    fontSize: theme.typography.sizes.md,
+    paddingVertical: spacing.xs,
+    paddingHorizontal: spacing.sm,
+    backgroundColor: colors.surface,
   },
   sectionCard: {
-    padding: theme.spacing.base,
-    gap: theme.spacing.sm,
+    padding: spacing.sm,
+    gap: spacing.xs,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -100,21 +98,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   progressBarBackground: {
-    height: 8,
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.md,
+    height: PROGRESS_BAR_HEIGHT,
+    backgroundColor: colors.surfaceSecondary,
+    borderRadius: radius.sm,
     overflow: 'hidden',
-    marginTop: theme.spacing.sm,
+    marginTop: spacing.xs,
   },
   progressBarFill: {
     height: '100%',
-    backgroundColor: theme.colors.primary,
-    borderRadius: theme.radius.md,
+    width: `${props?.progressPercent ?? 0}%`,
+    backgroundColor: colors.accent,
+    borderRadius: radius.sm,
   },
   cardDesc: {
-    marginVertical: 4,
+    marginVertical: spacing.xxs,
   },
   boldText: {
-    fontWeight: 'bold',
+    fontFamily: fontFamilies.bold,
   },
-});
+}));
