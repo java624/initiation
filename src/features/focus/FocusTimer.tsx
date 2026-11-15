@@ -18,7 +18,7 @@ const TIMER_SIZE = 240;
 const TIMER_BORDER = 6;
 const TIMER_FONT_SIZE = 56;
 
-export default function FocusScreen() {
+export const FocusTimer = () => {
   const styles = useStyles();
   const { t } = useTranslation();
   const { mode, status, timeLeft, setMode, startTimer, pauseTimer, resetTimer, tick } =
@@ -82,7 +82,7 @@ export default function FocusScreen() {
       </View>
     </View>
   );
-}
+};
 
 const useStyles = makeStyles(({ colors, spacing, radius, typography }) => ({
   container: {

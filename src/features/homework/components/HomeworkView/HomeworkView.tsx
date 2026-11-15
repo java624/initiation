@@ -27,7 +27,7 @@ import { useTheme } from '@/theme';
 import { Homework } from '../../services/homework.api';
 import { useHomework } from '../../hooks/useHomework';
 import { useStyles } from './HomeworkView.styles';
-
+import { useNow } from '@/shared/hooks/useNow';
 const WEBSITE_URL = 'https://novaflow-school.com/dashboard';
 const DAY_MS = 86400000;
 
@@ -42,6 +42,7 @@ const openUrl = (url: string) => {
 };
 
 export const HomeworkView = () => {
+  const now = useNow();
   const styles = useStyles();
   const { colors } = useTheme();
   const { t, i18n } = useTranslation();
@@ -69,7 +70,7 @@ export const HomeworkView = () => {
     if (item.status !== 'pending') {
       return { text: dateText, overdue: false };
     }
-    const overdue = d.getTime() < Date.now();
+    const overdue = d.getTime() < now;
     const diff = Math.round((startOfDay(d) - startOfDay(new Date())) / DAY_MS);
     let label: string;
     if (diff < 0) label = t('homework.overdueDays', { count: -diff });
@@ -158,9 +159,7 @@ export const HomeworkView = () => {
 
         {isOpen && (
           <Animated.View entering={FadeIn.duration(250)} style={styles.details}>
-            {item.description ? (
-              <Text style={styles.description}>{item.description}</Text>
-            ) : null}
+            {item.description ? <Text style={styles.description}>{item.description}</Text> : null}
 
             {item.teacher_comment ? (
               <View style={styles.commentBox}>

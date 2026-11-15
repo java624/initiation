@@ -18,7 +18,7 @@ import { useTheme } from '@/theme';
 import { Lesson } from '../../services/lessons.api';
 import { useLessons } from '../../hooks/useLessons';
 import { useStyles } from './LessonsView.styles';
-
+import { useNow } from '@/shared/hooks/useNow';
 type Tab = 'upcoming' | 'past';
 
 interface DaySection {
@@ -33,8 +33,7 @@ const DAY_MS = 86400000;
 const startOfDay = (d: Date): number =>
   new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
 
-const capitalize = (s: string): string =>
-  s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+const capitalize = (s: string): string => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
 
 const formatTime = (iso: string, locale: string): string =>
   new Date(iso).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
@@ -48,7 +47,7 @@ export const LessonsView = () => {
 
   const locale = i18n.language?.startsWith('en') ? 'en-GB' : 'uk-UA';
 
-  const nowMs = Date.now();
+  const nowMs = useNow();
   const upcoming = lessons.filter((l) => new Date(l.end_time).getTime() >= nowMs);
   const past = lessons.filter((l) => new Date(l.end_time).getTime() < nowMs).reverse();
   const visible = tab === 'upcoming' ? upcoming : past;
@@ -98,8 +97,7 @@ export const LessonsView = () => {
   const renderItem: SectionListRenderItem<Lesson, DaySection> = ({ item, index }) => {
     const start = new Date(item.start_time).getTime();
     const end = new Date(item.end_time).getTime();
-    const now = Date.now();
-    const isLive = start <= now && now <= end;
+    const isLive = start <= nowMs && nowMs <= end;
     const isNext = item.id === nextId;
     const statusKey = (item.status ?? '').toLowerCase();
     const isCancelled = statusKey === 'cancelled' || statusKey === 'canceled';
@@ -124,9 +122,7 @@ export const LessonsView = () => {
           <View style={styles.metaRow}>
             {isLive ? (
               <View style={[styles.badge, styles.badgeSuccess]}>
-                <Text style={[styles.badgeText, styles.badgeTextSuccess]}>
-                  {t('lessons.live')}
-                </Text>
+                <Text style={[styles.badgeText, styles.badgeTextSuccess]}>{t('lessons.live')}</Text>
               </View>
             ) : isNext ? (
               <View style={styles.badge}>

@@ -25,6 +25,7 @@ import { useTheme, useThemeController } from '@/theme';
 import { useAuth } from '@/features/auth';
 import { useDashboardData } from '../../hooks/useDashboardData';
 import { useStyles } from './StudentHome.styles';
+import { useNow } from '@/shared/hooks/useNow';
 
 const WEBSITE_DASHBOARD_URL = 'https://novaflow-school.com/dashboard';
 
@@ -46,6 +47,7 @@ interface StudentHomeProps {
 }
 
 export const StudentHome = ({ onSignOut }: StudentHomeProps) => {
+  const now = useNow();
   const styles = useStyles();
   const { colors } = useTheme();
   const { t, i18n } = useTranslation();
@@ -56,8 +58,7 @@ export const StudentHome = ({ onSignOut }: StudentHomeProps) => {
   const locale = i18n.language?.startsWith('en') ? 'en-GB' : 'uk-UA';
 
   const fullName = user?.name || user?.fullName || '';
-  const firstName =
-    user?.firstName || fullName.split(' ')[0] || user?.email?.split('@')[0] || '';
+  const firstName = user?.firstName || fullName.split(' ')[0] || user?.email?.split('@')[0] || '';
 
   // "english:English for Communication" -> "English for Communication"
   const rawCourse = user?.learningLanguage ?? '';
@@ -72,7 +73,7 @@ export const StudentHome = ({ onSignOut }: StudentHomeProps) => {
   const packets = studentData?.assignedPackets ?? [];
 
   const getCountdown = (iso: string): string => {
-    const diffMin = Math.floor((new Date(iso).getTime() - Date.now()) / 60000);
+    const diffMin = Math.floor((new Date(iso).getTime() - now) / 60000);
     if (diffMin <= 0) return t('student.lessonNow');
     if (diffMin < 60) return t('student.inMinutes', { minutes: diffMin });
     if (diffMin < 1440) {
@@ -304,11 +305,7 @@ export const StudentHome = ({ onSignOut }: StudentHomeProps) => {
               {isDark ? t('student.themeLight') : t('student.themeDark')}
             </Text>
           </Pressable>
-          <Pressable
-            style={styles.footerButton}
-            onPress={handleSignOut}
-            accessibilityRole="button"
-          >
+          <Pressable style={styles.footerButton} onPress={handleSignOut} accessibilityRole="button">
             <LogOut size={18} color={colors.textSecondary} />
             <Text style={styles.footerText}>{t('auth.logout')}</Text>
           </Pressable>
