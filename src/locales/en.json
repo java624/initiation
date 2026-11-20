@@ -119,7 +119,9 @@
     "pomodoroDesc": "Focus sessions with a timer and notifications",
     "startTimer": "Start",
     "themeLight": "Light theme",
-    "themeDark": "Dark theme"
+    "themeDark": "Dark theme",
+    "dailyGoalTitle": "Daily goal",
+    "dailyGoalValue": "{{done}} / {{goal}} min"
   },
   "tabs": {
     "home": "Home",
@@ -129,7 +131,7 @@
     "profile": "Profile",
     "comingSoon": "This section is coming soon"
   },
-    "lessons": {
+  "lessons": {
     "title": "Lessons",
     "subtitle": "Your schedule",
     "upcoming": "Upcoming",

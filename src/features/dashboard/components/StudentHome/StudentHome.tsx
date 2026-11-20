@@ -1,6 +1,7 @@
 import React from 'react';
 import { Linking, Pressable, ScrollView, View } from 'react-native';
 import { Image } from 'expo-image';
+import { DailyGoalCard, useDailyGoal } from '@/features/focus';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
@@ -47,6 +48,7 @@ interface StudentHomeProps {
 }
 
 export const StudentHome = ({ onSignOut }: StudentHomeProps) => {
+  const { focusedMinutes, goalMinutes } = useDailyGoal();
   const now = useNow();
   const styles = useStyles();
   const { colors } = useTheme();
@@ -145,7 +147,10 @@ export const StudentHome = ({ onSignOut }: StudentHomeProps) => {
             ) : null}
           </Animated.View>
         )}
-
+        {/* Прогрес денної цілі */}
+        <Animated.View entering={enter(4)}>
+          <DailyGoalCard focusedMinutes={focusedMinutes} goalMinutes={goalMinutes} />
+        </Animated.View>
         {/* Наступний урок */}
         {nextLesson ? (
           <Animated.View entering={enter(2)} style={styles.heroWrapper}>

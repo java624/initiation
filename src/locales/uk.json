@@ -119,7 +119,9 @@
     "pomodoroDesc": "Сесії фокусу з таймером та сповіщеннями",
     "startTimer": "Запустити",
     "themeLight": "Світла тема",
-    "themeDark": "Темна тема"
+    "themeDark": "Темна тема",
+    "dailyGoalTitle": "Денна ціль",
+    "dailyGoalValue": "{{done}} / {{goal}} хв"
   },
   "tabs": {
     "home": "Головна",
@@ -129,7 +131,7 @@
     "profile": "Профіль",
     "comingSoon": "Цей розділ скоро з'явиться"
   },
-    "lessons": {
+  "lessons": {
     "title": "Заняття",
     "subtitle": "Твій розклад",
     "upcoming": "Майбутні",
