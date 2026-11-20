@@ -46,11 +46,7 @@ export default function HomeScreen() {
         <Text variant="body" style={styles.cardDesc}>
           Сьогодні до повторення: <Text style={styles.boldText}>{pendingWordsCount} слів</Text>
         </Text>
-        <Button
-          label="Почати вчити"
-          variant="primary"
-          onPress={() => router.push('/dictionary' as any)}
-        />
+        <Button label="Почати вчити" variant="primary" onPress={() => router.push('/dictionary')} />
       </Card>
 
       {/* Швидкий запуск Pomodoro */}
@@ -59,11 +55,7 @@ export default function HomeScreen() {
         <Text variant="body" style={styles.cardDesc}>
           Режим фокусу: 25 хвилин
         </Text>
-        <Button
-          label="Швидкий старт"
-          variant="secondary"
-          onPress={() => router.push('/(tabs)/focus' as any)}
-        />
+        <Button label="Швидкий старт" variant="secondary" onPress={() => router.push('/focus')} />
       </Card>
     </Screen>
   );

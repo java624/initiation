@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { Pressable, View } from 'react-native';
+import { AppState, Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import { scheduleTimerCompleteNotification } from '@/shared/lib/notificationService';
+import { TIMER_TICK_MS } from '@/shared/constants/timer';
+import { registerForPushNotificationsAsync } from '@/shared/lib/notificationService';
 import { Button, Text } from '@/shared/ui';
 import { makeStyles } from '@/theme';
 
@@ -24,20 +25,30 @@ export const FocusTimer = () => {
   const { mode, status, timeLeft, setMode, startTimer, pauseTimer, resetTimer, tick } =
     useTimerStore();
 
+  // Дозвіл на сповіщення просимо один раз при відкритті екрана
+  useEffect(() => {
+    void registerForPushNotificationsAsync();
+  }, []);
+
+  // Відлік за таймстемпом + перерахунок при поверненні з фону
   useEffect(() => {
     if (status !== 'running') return;
-    const interval = setInterval(tick, 1000);
-    return () => clearInterval(interval);
+    const interval = setInterval(tick, TIMER_TICK_MS);
+    const subscription = AppState.addEventListener('change', (state) => {
+      if (state === 'active') tick();
+    });
+    return () => {
+      clearInterval(interval);
+      subscription.remove();
+    };
   }, [status, tick]);
 
-  useEffect(() => {
-    if (timeLeft === 0 && status === 'idle') {
-      scheduleTimerCompleteNotification(
-        t('timer.completedTitle', 'Сесія завершена! 🎉'),
-        t('timer.completedBody', 'Час зробити перерву або продовжити роботу.'),
-      );
-    }
-  }, [timeLeft, status, t]);
+  const handleStart = () => {
+    void startTimer({
+      title: t('timer.completedTitle', 'Сесія завершена! 🎉'),
+      body: t('timer.completedBody', 'Час зробити перерву або продовжити роботу.'),
+    });
+  };
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
@@ -76,7 +87,7 @@ export const FocusTimer = () => {
         {status === 'running' ? (
           <Button label={t('timer.pause', 'Пауза')} variant="primary" onPress={pauseTimer} />
         ) : (
-          <Button label={t('timer.start', 'Старт')} variant="primary" onPress={startTimer} />
+          <Button label={t('timer.start', 'Старт')} variant="primary" onPress={handleStart} />
         )}
         <Button label={t('timer.reset', 'Скинути')} variant="secondary" onPress={resetTimer} />
       </View>
