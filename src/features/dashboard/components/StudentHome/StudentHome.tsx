@@ -20,6 +20,7 @@ import {
   Timer,
 } from 'lucide-react-native';
 import { Button } from '@/shared/ui/Button';
+import { useRouter } from 'expo-router';
 import { Screen } from '@/shared/ui/Screen';
 import { Text } from '@/shared/ui/Text';
 import { useTheme, useThemeController } from '@/theme';
@@ -90,7 +91,10 @@ export const StudentHome = ({ onSignOut }: StudentHomeProps) => {
   const handleOpenLesson = () => {
     Linking.openURL(WEBSITE_DASHBOARD_URL);
   };
-
+  const router = useRouter();
+  const handleStartTimer = () => {
+    router.push('/focus');
+  };
   const handleToggleTheme = () => {
     setMode(isDark ? 'light' : 'dark');
   };
@@ -290,7 +294,7 @@ export const StudentHome = ({ onSignOut }: StudentHomeProps) => {
             variant="secondary"
             size="sm"
             label={t('student.startTimer')}
-            onPress={() => undefined}
+            onPress={handleStartTimer}
           />
         </Animated.View>
 
