@@ -25,11 +25,9 @@ function loadNotifications(): Promise<NotificationsModule | null> {
         // Поведінка сповіщень, коли додаток відкритий
         module.setNotificationHandler({
           handleNotification: async () => ({
-            shouldShowAlert: true,
             shouldPlaySound: true,
             shouldSetBadge: false,
             shouldShowBanner: true,
-            shouldShowBadge: true,
             shouldShowList: true,
           }),
         });

@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  View,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import { SafeAreaView, type Edge } from 'react-native-safe-area-context';
 import { makeStyles } from '@/theme/makeStyles';
 import { ScreenProps } from './Screen.types';
 
@@ -23,14 +18,20 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 }));
 
+type ScreenWithEdgesProps = ScreenProps & {
+  /** Які краї враховувати як safe area. За замовчуванням усі чотири. */
+  edges?: readonly Edge[];
+};
+
 export const Screen = ({
   scrollable = false,
   scrollViewProps,
   keyboardAware = true,
+  edges,
   style,
   children,
   ...rest
-}: ScreenProps) => {
+}: ScreenWithEdgesProps) => {
   const styles = useStyles();
 
   const inner = scrollable ? (
@@ -55,7 +56,13 @@ export const Screen = ({
     >
       {inner}
     </KeyboardAvoidingView>
-  ) : inner;
+  ) : (
+    inner
+  );
 
-  return <SafeAreaView style={styles.safe}>{wrapped}</SafeAreaView>;
+  return (
+    <SafeAreaView style={styles.safe} edges={edges}>
+      {wrapped}
+    </SafeAreaView>
+  );
 };

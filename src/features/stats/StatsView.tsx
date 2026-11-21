@@ -8,6 +8,8 @@ import { Card, Screen, Text } from '@/shared/ui';
 import { useStyles } from './StatsView.styles';
 import { useStatsStore } from './useStatsStore';
 
+const SCREEN_EDGES = ['left', 'right', 'bottom'] as const;
+
 export const StatsView: React.FC = () => {
   const styles = useStyles();
   const { t } = useTranslation();
@@ -25,11 +27,9 @@ export const StatsView: React.FC = () => {
   ];
 
   return (
-    <Screen scrollable>
+    <Screen scrollable edges={SCREEN_EDGES}>
       <View style={styles.container}>
         <Card style={styles.card}>
-          <Text variant="h2">{t('statsView.title')}</Text>
-
           <View style={styles.statsGrid}>
             {stats.map((item) => (
               <View
