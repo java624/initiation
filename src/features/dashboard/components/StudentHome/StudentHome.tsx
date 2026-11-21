@@ -98,7 +98,9 @@ export const StudentHome = ({ onSignOut }: StudentHomeProps) => {
   const handleToggleTheme = () => {
     setMode(isDark ? 'light' : 'dark');
   };
-
+  const handleReview = () => {
+    router.push('/vocabulary');
+  };
   const handleSignOut = async () => {
     await signOut();
     onSignOut?.();
@@ -232,12 +234,7 @@ export const StudentHome = ({ onSignOut }: StudentHomeProps) => {
               </Text>
             </View>
           </View>
-          <Button
-            variant="primary"
-            size="md"
-            label={t('student.review')}
-            onPress={() => undefined}
-          />
+          <Button variant="primary" size="md" label={t('student.review')} onPress={handleReview} />
         </Animated.View>
 
         {/* Колоди слів */}
