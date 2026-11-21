@@ -46,27 +46,33 @@ export async function registerForPushNotificationsAsync(): Promise<boolean> {
   const Notifications = await loadNotifications();
   if (!Notifications) return false;
 
-  if (Platform.OS === 'android') {
-    await Notifications.setNotificationChannelAsync(TIMER_CHANNEL_ID, {
-      name: 'Pomodoro',
-      importance: Notifications.AndroidImportance.HIGH,
-      vibrationPattern: [0, 250, 250, 250],
-    });
-  }
+  try {
+    if (Platform.OS === 'android') {
+      await Notifications.setNotificationChannelAsync(TIMER_CHANNEL_ID, {
+        name: 'Pomodoro',
+        importance: Notifications.AndroidImportance.HIGH,
+        vibrationPattern: [0, 250, 250, 250],
+      });
+    }
 
-  const { status: existingStatus } = await Notifications.getPermissionsAsync();
-  let finalStatus = existingStatus;
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
 
-  if (existingStatus !== 'granted') {
-    const { status } = await Notifications.requestPermissionsAsync();
-    finalStatus = status;
-  }
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
 
-  if (finalStatus !== 'granted') {
-    console.warn('Не вдалося отримати дозвіл на сповіщення!');
+    if (finalStatus !== 'granted') {
+      console.warn('Не вдалося отримати дозвіл на сповіщення!');
+      return false;
+    }
+    return true;
+  } catch (error) {
+    // Expo Go на Android не підтримує канали сповіщень повністю
+    console.warn('Не вдалося налаштувати сповіщення', error);
     return false;
   }
-  return true;
 }
 
 /** Миттєве сповіщення (залишено для сумісності). */
