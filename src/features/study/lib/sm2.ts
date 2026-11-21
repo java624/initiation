@@ -4,10 +4,11 @@ import { Rating, Sm2Result, Sm2State } from '../types';
 const roundEaseFactor = (value: number): number =>
   Math.round(value * SM2.EF_PRECISION) / SM2.EF_PRECISION;
 
-export const createInitialSm2State = (): Sm2State => ({
+export const createInitialSm2State = (): Sm2Result => ({
   repetitions: 0,
   intervalDays: 0,
   easeFactor: SM2.INITIAL_EASE_FACTOR,
+  dueAt: new Date(),
 });
 
 /**
@@ -32,16 +33,12 @@ export const calculateNextReview = (
     } else if (repetitions === 1) {
       intervalDays = SM2.SECOND_INTERVAL_DAYS;
     } else {
-      intervalDays = Math.max(
-        SM2.FIRST_INTERVAL_DAYS,
-        Math.round(intervalDays * easeFactor),
-      );
+      intervalDays = Math.max(SM2.FIRST_INTERVAL_DAYS, Math.round(intervalDays * easeFactor));
     }
     repetitions += 1;
 
     const gap = SM2.MAX_QUALITY - quality;
-    const delta =
-      SM2.EF_BASE_DELTA - gap * (SM2.EF_QUALITY_FACTOR + gap * SM2.EF_QUALITY_SQUARE);
+    const delta = SM2.EF_BASE_DELTA - gap * (SM2.EF_QUALITY_FACTOR + gap * SM2.EF_QUALITY_SQUARE);
     easeFactor = roundEaseFactor(Math.max(SM2.MIN_EASE_FACTOR, easeFactor + delta));
   }
 

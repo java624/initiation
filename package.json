@@ -55,9 +55,11 @@
     "jest-expo": "~57.0.6",
     "lint-staged": "^17.6.0",
     "prettier": "^3.9.10",
-    "typescript": "~6.0.3"
+    "typescript": "~6.0.3",
+    "vitest": "^5.1.1"
   },
   "scripts": {
+    "test": "vitest",
     "start": "expo start",
     "start:go": "expo start --go",
     "android": "expo run:android",

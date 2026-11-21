@@ -1,15 +1,18 @@
 import { DAY_MS, SM2 } from '../constants';
 import { Sm2State } from '../types';
+import { describe, it, expect } from 'vitest';
 import { calculateNextReview, createInitialSm2State } from './sm2';
 
 const NOW = new Date('2026-11-01T10:00:00.000Z');
 
 describe('createInitialSm2State', () => {
   it('починає з нуля і коефіцієнта 2.5', () => {
-    expect(createInitialSm2State()).toEqual({
+    const result = createInitialSm2State();
+    expect(result).toEqual({
       repetitions: 0,
       intervalDays: 0,
       easeFactor: SM2.INITIAL_EASE_FACTOR,
+      dueAt: expect.any(Date),
     });
   });
 });
