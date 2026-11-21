@@ -131,6 +131,24 @@
     "profile": "Профіль",
     "comingSoon": "Цей розділ скоро з'явиться"
   },
+  "profileView": {
+    "openStats": "Статистика",
+    "title": "👤 Профіль",
+    "usernameLabel": "Ім'я: {{name}}",
+    "namePlaceholder": "Введіть ваше ім'я",
+    "save": "Зберегти",
+    "editProfile": "Редагувати профіль",
+    "logout": "Вийти з акаунта",
+    "settingsTitle": "⚙️ Налаштування",
+    "notifications": "Сповіщення",
+    "dailyGoal": "Ціль на день: {{minutes}} хв",
+    "themeLabel": "Тема оформлення:",
+    "themeLight": "Світла",
+    "themeDark": "Темна",
+    "themeSystem": "Системна",
+    "logoutTitle": "Вихід",
+    "logoutMessage": "Ви дійсно хочете вийти з акаунта?"
+  },
   "lessons": {
     "title": "Заняття",
     "subtitle": "Твій розклад",
@@ -153,5 +171,19 @@
       "cancelled": "Скасовано",
       "canceled": "Скасовано"
     }
+  },
+  "dictionary": {
+    "title": "📚 Словник NovaFlow",
+    "wordPlaceholder": "Слово (напр. Focus)",
+    "translationPlaceholder": "Переклад",
+    "addWord": "Додати слово",
+    "removeWord": "Видалити слово {{word}}"
+  },
+  "statsView": {
+    "title": "📊 Статистика за сьогодні",
+    "sessions": "Сесій фокусу",
+    "focusTime": "Час у фокусі",
+    "minutes": "{{count}} хв",
+    "words": "Слів у словнику"
   }
 }

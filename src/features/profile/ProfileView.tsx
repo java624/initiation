@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, Switch, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-
+import { useRouter } from 'expo-router';
 import { useAuth } from '@/features/auth';
 import { Button, Card, Input, Screen, Text } from '@/shared/ui';
 import { useThemeController } from '@/theme';
@@ -12,6 +12,7 @@ import { useProfileStore } from './useProfileStore';
 export const ProfileView: React.FC = () => {
   const styles = useStyles();
   const { t } = useTranslation();
+  const router = useRouter();
   const { user, signOut } = useAuth();
   const { mode, setMode } = useThemeController();
   const { username, notificationsEnabled, dailyGoalMinutes, setUsername, toggleNotifications } =
@@ -93,7 +94,13 @@ export const ProfileView: React.FC = () => {
           <View style={styles.settingRow}>
             <Text>{t('profileView.dailyGoal', { minutes: dailyGoalMinutes })}</Text>
           </View>
-
+          <View style={styles.settingBlock}>
+            <Button
+              label={t('profileView.openStats')}
+              variant="secondary"
+              onPress={() => router.push('/stats')}
+            />
+          </View>
           {/* Перемикання теми за ТЗ */}
           <View style={styles.settingBlock}>
             <Text style={styles.label}>{t('profileView.themeLabel')}</Text>

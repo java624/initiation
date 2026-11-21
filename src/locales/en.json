@@ -131,6 +131,24 @@
     "profile": "Profile",
     "comingSoon": "This section is coming soon"
   },
+  "profileView": {
+    "openStats": "Statistics",
+    "title": "👤 Profile",
+    "usernameLabel": "Name: {{name}}",
+    "namePlaceholder": "Enter your name",
+    "save": "Save",
+    "editProfile": "Edit profile",
+    "logout": "Log out",
+    "settingsTitle": "⚙️ Settings",
+    "notifications": "Notifications",
+    "dailyGoal": "Daily goal: {{minutes}} min",
+    "themeLabel": "Theme:",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "logoutTitle": "Log out",
+    "logoutMessage": "Are you sure you want to log out?"
+  },
   "lessons": {
     "title": "Lessons",
     "subtitle": "Your schedule",
@@ -153,5 +171,19 @@
       "cancelled": "Cancelled",
       "canceled": "Cancelled"
     }
+  },
+  "dictionary": {
+    "title": "📚 NovaFlow Dictionary",
+    "wordPlaceholder": "Word (e.g. Focus)",
+    "translationPlaceholder": "Translation",
+    "addWord": "Add word",
+    "removeWord": "Remove word {{word}}"
+  },
+  "statsView": {
+    "title": "📊 Today's stats",
+    "sessions": "Focus sessions",
+    "focusTime": "Time in focus",
+    "minutes": "{{count}} min",
+    "words": "Words in dictionary"
   }
 }
