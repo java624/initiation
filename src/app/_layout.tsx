@@ -13,11 +13,13 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 SplashScreen.preventAutoHideAsync();
 
 function RootContent() {
-  const { isDark } = useTheme();
+  const { isDark, colors } = useTheme();
+  const { t } = useTranslation();
   const { isInitialized, isAuthenticated, restoreSession } = useAuth();
 
   useEffect(() => {
@@ -29,12 +31,25 @@ function RootContent() {
     return <SplashScreenView />;
   }
 
+  const statsHeaderStyle = { backgroundColor: colors.background };
+
   return (
     <>
       <StatusBar style={isDark ? 'light' : 'dark'} />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Protected guard={isAuthenticated}>
           <Stack.Screen name="(tabs)" />
+          <Stack.Screen
+            name="stats"
+            options={{
+              headerShown: true,
+              title: t('statsView.title'),
+              headerBackTitle: '',
+              headerShadowVisible: false,
+              headerStyle: statsHeaderStyle,
+              headerTintColor: colors.textPrimary,
+            }}
+          />
         </Stack.Protected>
         <Stack.Protected guard={!isAuthenticated}>
           <Stack.Screen name="login" />
